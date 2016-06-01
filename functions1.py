@@ -10,11 +10,9 @@ def subDateFloat(date1, date2):
     return aux2
 
 def remainingTime(x):
-    aux = subDataFloat(x.getDeadline(), datetime.datetime.now()) / subDataFloat(x.getDeadline(), x.getCreationDate())
+    aux = subDataFloat(x.get_deadline(), datetime.datetime.now()) / subDataFloat(x.get_deadline(), x.get_creationDate())
     return aux
 
 def notCompleted(x):
-    aux = (x.getWorkload() - x.getDone()) / x.workload()
+    aux = (x.get_workload() - x.get_done()) / x.get_workload()
     return aux
-
-

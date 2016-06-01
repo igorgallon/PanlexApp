@@ -9,6 +9,8 @@
     done: tempo já concluído da tarefa (em horas)
 '''
 
+import functions1 
+
 class Task:
     
     def __init__ (self, idTask, creationDate, description, workload, deadline, priority, subtask, done):
@@ -20,6 +22,7 @@ class Task:
         self.__priority = priority
         self.__subtask = subtask
         self.__done = done
+        self.__weight = weight
         
     # Métodos set
     
@@ -45,7 +48,10 @@ class Task:
         self.__subtask = subtask
         
     def set_done(self, done):
-        self.__done = done    
+        self.__done = done  
+        
+    def set_weight(self, weight):
+        self.weight = notCompleted(self)/remainingTime(self)*get_priority(self)
         
     # Métodos get
     
@@ -72,3 +78,6 @@ class Task:
         
     def get_done(self):
         return __done    
+    
+    def get_weight(self):
+        return __weight
