@@ -1,21 +1,10 @@
-''' Classe Tarefa
-    idTask: identificação da Tarefa
-    creationDate: data de criação da tarefa (em data)
-    description: descrição da tarefa
-    workload: tempo estimado pelo usuário para realizar a tarefa (em horas)
-    deadline: prazo para conclusão da tarefa (em data)
-    priority: prioridade para realizar a tarefa (1 - menos prioritário, 5 - mais prioritário)
-    subtask: sub-tarefas a serem cumpridas dentro da tarefa
-    done: tempo já concluído da tarefa (em horas)
-'''
-
 import functions1 
 
 class Task:
     
     task_counter = 0
     
-    def __init__ (self, creationDate, description, workload, deadline, priority, subtask, done):  
+    def __init__ (self, creationDate, description, workload, deadline, priority, subtask):  
         self.__idTask = Task.task_counter
         Task.task_counter += 1
         self.__creationDate = creationDate
@@ -24,10 +13,9 @@ class Task:
         self.__deadline = deadline
         self.__priority = priority
         self.__subtask = subtask
-        self.__done = done
-        self.__weight = weight
+        self.__done = 0
     
-    # Métodos set
+    # Metodos set
     
     def set_idTask(self, idTask):
         self.__idTask = idTask
@@ -51,12 +39,12 @@ class Task:
         self.__subtask = subtask
         
     def set_done(self, done):
-        self.__done = done  
+        self.__done += done  
         
-    def set_weight(self, weight):
-        self.weight = notCompleted(self)/remainingTime(self)*get_priority(self)
+    def set_weight(self):
+        self.__weight = (notCompleted(self)/remainingTime(self))*get_priority(self)
         
-    # Métodos get
+    # Metodos get
     
     def get_idTask(self):
         return __idTask
