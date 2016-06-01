@@ -13,8 +13,11 @@ import functions1
 
 class Task:
     
-    def __init__ (self, idTask, creationDate, description, workload, deadline, priority, subtask, done):
-        self.__idTask = idTask
+    task_counter = 0
+    
+    def __init__ (self, creationDate, description, workload, deadline, priority, subtask, done):  
+        self.__idTask = Task.task_counter
+        Task.task_counter += 1
         self.__creationDate = creationDate
         self.__description = description
         self.__workload = workload
@@ -23,12 +26,12 @@ class Task:
         self.__subtask = subtask
         self.__done = done
         self.__weight = weight
-        
+    
     # Métodos set
     
     def set_idTask(self, idTask):
         self.__idTask = idTask
-        
+
     def set_creationDate(self, creationDate):
         self.__creationDate = creationDate
     
