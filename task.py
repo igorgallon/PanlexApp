@@ -1,19 +1,34 @@
+''' Classe Tarefa
+    idTask: identificação da Tarefa
+    creationDate: data de criação da tarefa (em data)
+    description: descrição da tarefa
+    workload: tempo estimado pelo usuário para realizar a tarefa (em horas)
+    deadline: prazo para conclusão da tarefa (em data)
+    priority: prioridade para realizar a tarefa (1 - menos prioritário, 5 - mais prioritário)
+    subtask: sub-tarefas a serem cumpridas dentro da tarefa
+    done: tempo já concluído da tarefa (em horas)
+'''
+
 class Task:
     
-    def __init__ (self, idTask, description, workload, deadline, priority, subtask, creationDate):
+    def __init__ (self, idTask, creationDate, description, workload, deadline, priority, subtask, done):
         self.__idTask = idTask
+        self.__creationDate = creationDate
         self.__description = description
         self.__workload = workload
         self.__deadline = deadline
         self.__priority = priority
         self.__subtask = subtask
-        self.__creationDate = creationDate
+        self.__done = done
         
     # Métodos set
     
     def set_idTask(self, idTask):
         self.__idTask = idTask
         
+    def set_creationDate(self, creationDate):
+        self.__creationDate = creationDate
+    
     def set_description(self, description):
         self.__description = description
         
@@ -29,13 +44,16 @@ class Task:
     def set_subtask(self, subtask):
         self.__subtask = subtask
         
-    def set_creationDate(self, creationDate):
-        self.__creationDate = creationDate
+    def set_done(self, done):
+        self.__done = done    
         
     # Métodos get
     
     def get_idTask(self):
         return __idTask
+
+    def get_creationDate(self):
+        return __creationDate    
     
     def get_description(self):
         return __description
@@ -51,6 +69,6 @@ class Task:
     
     def get_subtask(self):
         return __subtask
-    
-    def get_creationDate(self):
-        return __creationDate
+        
+    def get_done(self):
+        return __done    
