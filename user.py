@@ -1,7 +1,7 @@
 import time
 import datetime
 
-from task import Task
+from Task import Task
 
 class User:
     
@@ -37,6 +37,7 @@ class User:
     def createTask(self, description, workload, deadline, priority, subtask):
         creationDate = datetime.datetime.now()
         task = Task(creationDate, description, workload, deadline, priority, subtask)
+        # Colocar num vetor de task
         return task
         # Salvar task no Banco de Dados...
         
