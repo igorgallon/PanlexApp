@@ -1,0 +1,100 @@
+#: import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+
+ScreenManagement:
+    transition: RiseInTransition()
+    LoginScreen:
+    SignupScreen:
+    TaskScreen:
+    SettingsScreen:
+    NewTaskScreen:
+    EditTaskScreen:
+    DeleteTaskScreen:
+
+<LoginScreen>:
+    name: 'login'
+    
+    BoxLayout:
+        Button:
+            text: 'Sign up'
+            on_press: app.root.current = 'signup'
+        Button:
+            text: 'Login'
+            on_press: app.root.current = 'task'
+        Button:
+            text: 'Quit'
+            on_press: App.get_running_app().stop()
+
+<SignupScreen>:
+    name: 'signup'
+    
+    BoxLayout:
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'login'
+        Button:
+            text: 'Back'
+            on_press: app.root.current = 'login'
+            
+<TaskScreen>:
+    name: 'task'
+    
+    BoxLayout:
+        Button:
+            text: 'Add Task'
+            on_press: app.root.current = 'newtask'
+        Button:
+            text: 'Edit Task'
+            on_press: app.root.current = 'edittask'
+        Button:
+            text: 'Remove Task'
+            on_press: app.root.current = 'deletetask'                
+        Button:
+            text: 'Settings'
+            on_press: app.root.current = 'settings'
+        Button:
+            text: 'Sign out'
+            on_press: app.root.current = 'login'
+
+<SettingsScreen>:
+    name: 'settings'
+    
+    BoxLayout:
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'task' 
+        Button:
+            text: 'Cancel'
+            on_press: app.root.current = 'task'
+
+<NewTaskScreen>:
+    name: 'newtask'
+    
+    BoxLayout:
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'task'
+        Button:
+            text: 'Cancel'
+            on_press: app.root.current = 'task'
+            
+<EditTaskScreen>:
+    name: 'edittask'
+    
+    BoxLayout:
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'task'
+        Button:
+            text: 'Cancel'
+            on_press: app.root.current = 'task'
+            
+<DeleteTaskScreen>:
+    name: 'deletetask'
+    
+    BoxLayout:
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'task'
+        Button:
+            text: 'Cancel'
+            on_press: app.root.current = 'task'  
