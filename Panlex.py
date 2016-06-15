@@ -2,7 +2,8 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
 
-# Declare both screens
+import ScreenPanlex
+
 class LoginScreen(Screen):
     pass
 
@@ -24,13 +25,23 @@ class EditTaskScreen(Screen):
 class DeleteTaskScreen(Screen):
     pass
 
-class ScreenManagement(ScreenManager):
-    pass
 
-presentation = Builder.load_file("screen.kv")
+presentation = Builder.load_file("Screen.kv")
 
 class PanlexApp(App):
     def build(self):
-        return presentation
+        manager = ScreenManager()
+        
+        manager.add_widget(LoginScreen(name='login'))
+        manager.add_widget(SignupScreen(name='signup'))
+        manager.add_widget(TaskScreen(name='task'))
+        manager.add_widget(SettingsScreen(name='settings'))
+        manager.add_widget(NewTaskScreen(name='newtask'))
+        manager.add_widget(EditTaskScreen(name='edittask'))
+        manager.add_widget(DeleteTaskScreen(name='deletetask'))
+        
+        return manager
 
-PanlexApp().run()
+
+if __name__ == '__main__':
+    PanlexApp().run()

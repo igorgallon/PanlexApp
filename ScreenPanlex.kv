@@ -1,15 +1,3 @@
-#: import RiseInTransition kivy.uix.screenmanager.RiseInTransition
-
-ScreenManagement:
-    transition: RiseInTransition()
-    LoginScreen:
-    SignupScreen:
-    TaskScreen:
-    SettingsScreen:
-    NewTaskScreen:
-    EditTaskScreen:
-    DeleteTaskScreen:
-
 <LoginScreen>:
     name: 'login'
     
@@ -17,11 +5,14 @@ ScreenManagement:
         Button:
             text: 'Sign up'
             on_press: app.root.current = 'signup'
+            font_size: 30
         Button:
             text: 'Login'
+            font_size: 30
             on_press: app.root.current = 'task'
         Button:
             text: 'Quit'
+            font_size: 30
             on_press: App.get_running_app().stop()
 
 <SignupScreen>:
