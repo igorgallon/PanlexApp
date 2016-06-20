@@ -1,8 +1,10 @@
+# Classe Panlex de Panlex App - 2016
+# Gerenciador da interface grafica
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
 
-import ScreenPanlex
 
 class LoginScreen(Screen):
     pass
@@ -26,7 +28,7 @@ class DeleteTaskScreen(Screen):
     pass
 
 
-presentation = Builder.load_file("Screen.kv")
+presentation = Builder.load_file("ScreensPanlex.kv")
 
 class PanlexApp(App):
     def build(self):

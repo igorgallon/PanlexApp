@@ -1,3 +1,5 @@
+# Classe Task de Panlex App - 2016
+
 import Functions 
 
 class Task:
@@ -14,6 +16,10 @@ class Task:
         self.__priority = priority
         self.__subtask = subtask
         self.__done = 0
+        self.__weight = 0
+    
+    def get_info(self):
+        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__subtask, self.__done, self.__weight)
     
     # Metodos set
     
@@ -47,28 +53,28 @@ class Task:
     # Metodos get
     
     def get_idTask(self):
-        return __idTask
+        return self.__idTask
 
     def get_creationDate(self):
-        return __creationDate    
+        return self.__creationDate    
     
     def get_description(self):
-        return __description
+        return self.__description
     
     def get_workload(self):
-        return __workload
+        return self.__workload
     
     def get_deadline(self):
-        return __deadline
+        return self.__deadline
     
     def get_priority(self):
-        return __priority
+        return self.__priority
     
     def get_subtask(self):
-        return __subtask
+        return self.__subtask
         
     def get_done(self):
-        return __done    
+        return self.__done    
     
     def get_weight(self):
-        return __weight
+        return self.__weight
