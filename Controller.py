@@ -64,8 +64,8 @@ class Controller:
         self.__taskList.append(task)
         
         # Salvar task no Banco de Dados...
-        DB.insertTask(self, task.get_idTask(), task.get_creationDate(), description, workload, deadline, priority, task.get_weight())
-
+        DB.insertTask(self, task.get_idTask(), task.get_creationDate(), description, workload, deadline, priority, task.get_done(), task.get_weight())
+        
         return  self.__taskList
     
     def selectTask(self):
@@ -80,6 +80,12 @@ class Controller:
         
         return self.__taskList
         
-    def editTask(self,idTask,description, workload, deadline, priority, weight):
+    def editTask(self,idTask,description, workload, deadline, priority, done):
+        # Atualizar informacoes na lista de objetos de Task
+        self.__taskList[idTask].set_info(description, workload, deadline, priority, done)
+        
+        new_Done = self.__taskList[idTask].get_done()
+        new_Weight = self.__taskList[idTask].get_weight()
+
         # Procurar task e editar no Banco de Dados...
-        DB.updateTask(self,idTask,description,workload,deadline,priority,weight)
+        DB.updateTask(self, idTask, description, workload, deadline, priority, new_Done, new_Weight)

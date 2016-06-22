@@ -15,7 +15,7 @@ class DB:
         cursor = self.__conexao.cursor()
         cursor.execute('''DROP TABLE IF EXISTS Task''')
         cursor.execute('''CREATE TABLE IF NOT EXISTS Task(idTask int PRIMARY KEY,
-        creationDate text,description text,workload int,deadline text,priority int, weight real)''')  
+        creationDate text,description text,workload int,deadline text,priority int, done int, weight real)''')  
         cursor.close()
         self.__conexao.commit()
         
@@ -38,9 +38,10 @@ class DB:
                 self.__conexao.commit()
     
     # Insere tuplas na tabela Task
-    def insertTask(self, idTask, creationDate, description, workload, deadline, priority, weight):
+    def insertTask(self, idTask, creationDate, description, workload, deadline, priority, done, weight):
         cursor = self.__conexao.cursor()
-        cursor.execute('''INSERT INTO Task VALUES(?,?,?,?,?,?,?)''', [idTask, str(creationDate), description, workload, str(deadline), priority, weight])
+        cursor.execute('''INSERT INTO Task VALUES(?,?,?,?,?,?,?,?)''',
+                       [idTask, str(creationDate), description, workload, str(deadline), priority, done, weight])
         cursor.close()
         self.__conexao.commit()
     
@@ -62,7 +63,7 @@ class DB:
     def selectTask(self):
         cursor = self.__conexao.cursor()
         for row in cursor.execute('SELECT * FROM Task ORDER BY idTask'):
-            print(row[0], row[1], row[2], row[3], row[4], row[5], row[6])
+            print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
         cursor.close()
         self.__conexao.commit()
     
@@ -83,26 +84,23 @@ class DB:
         self.__conexao.commit()
         
     # Atualiza tuplas da tabela Task - buscando pelo idTask, sobrescreve campos nao editados
-    def updateTask(self, idTask, description, workload, deadline, priority, weight):
+    def updateTask(self, idTask, description, workload, deadline, priority, done, weight):
         cursor = self.__conexao.cursor()
-        cursor.execute('''UPDATE Task 
-                       SET description = ?, workload = ?, deadline = ?, priority = ?, weight = ? WHERE idTask = ?''',
-                        [description, workload, str(deadline), priority, weight, idTask])
+        cursor.execute('''UPDATE Task SET description = ?, workload = ?, deadline = ?, priority = ?, done = ?, weight = ? WHERE idTask = ?''',
+                        [description, workload, str(deadline), priority, done, weight, idTask])
         self.__conexao.commit()
         
     # Atualiza tuplas da tabela Task - buscando pelo idTask, sobrescreve campos nao editados
     def updateSubTask(self, idTask, idSubTask, description, done):
         cursor = self.__conexao.cursor()
-        cursor.execute('''UPDATE SubTask 
-                       SET description = ?, done = ? WHERE idTask = ? AND idSubTask = ?''',
+        cursor.execute('''UPDATE SubTask SET description = ?, done = ? WHERE idTask = ? AND idSubTask = ?''',
                         [description, done, idTask, idSubTask])
         self.__conexao.commit()
 
     # Atualiza informacoes do usuario
     def updateUserSettings(self, username, numTasksDaily, workloadDaily):
         cursor = self.__conexao.cursor()
-        cursor.execute('''UPDATE User
-                       SET username = ?, numTaskDaily = ?, worloadDaily = ? WHERE username = ?''',
+        cursor.execute('''UPDATE User SET username = ?, numTaskDaily = ?, worloadDaily = ? WHERE username = ?''',
                         [username, numTasksDaily, workloadDaily, username])
         self.__conexao.commit()
 

@@ -18,10 +18,7 @@ class Task:
         self.__priority = priority
         self.__done = 0
         self.__weight = (Functions.notCompleted(self)/Functions.remainingTime(self))*self.__priority
-    
-    def get_info(self):
-        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__subtask, self.__done, self.__weight)
-    
+       
     # Metodos set
     
     def set_idTask(self, idTask):
@@ -74,3 +71,16 @@ class Task:
     
     def get_weight(self):
         return self.__weight
+    
+    # Atualiza informacoes da Task
+    def set_info(self, description, workload, deadline, priority, done):
+        self.__description = description
+        self.__workload = workload
+        self.__deadline = deadline
+        self.__priority = priority
+        self.__done += done
+        self.__weight = (Functions.notCompleted(self)/Functions.remainingTime(self))*self.__priority
+    
+    # Retorna as informacoes da Task
+    def get_info(self):
+        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__subtask, self.__done, self.__weight)    
