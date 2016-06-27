@@ -3,8 +3,8 @@
 import time
 import datetime
 
-from Task import Task
-from DB import DB
+import Task
+import DB
 
 class Controller:    
     
