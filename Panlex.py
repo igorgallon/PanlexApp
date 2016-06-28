@@ -5,7 +5,6 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen, RiseInTransition
 
-import Controller
 
 class LoginScreen(Screen):
     pass
@@ -20,21 +19,14 @@ class SettingsScreen(Screen):
     pass
 
 class NewTaskScreen(Screen):
-    def on_event(self,obj):
-            print("Typical event from " + obj)
-            print(self.ids)
-            
-            # Id precisa ser algumacoisa _ alguma coisa
-            
-            texto = self.ids["id_text"]
-            print(texto.text)
-            
+    pass
 
 class EditTaskScreen(Screen):
     pass
 
 class DeleteTaskScreen(Screen):
     pass
+
 
 presentation = Builder.load_file("ScreensPanlex.kv")
 

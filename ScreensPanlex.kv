@@ -18,7 +18,7 @@
 <SignupScreen>:
     name: 'signup'
     
-    BoxLayout:  
+    BoxLayout:
         Button:
             text: 'OK'
             on_press: app.root.current = 'login'
@@ -62,19 +62,12 @@
     
     BoxLayout:
         Button:
-            id: f_but
             text: 'OK'
-            on_press: root.on_event('Teste passar string')
+            on_press: app.root.current = 'task'
         Button:
             text: 'Cancel'
             on_press: app.root.current = 'task'
-        Label:
-            text: 'Task Description'
-        TextInput:
-            id: id_text
-            text: 'teste'
             
-        
 <EditTaskScreen>:
     name: 'edittask'
     
