@@ -19,14 +19,20 @@ class SettingsScreen(Screen):
     pass
 
 class NewTaskScreen(Screen):
-    pass
-
+    def on_event(self,obj):
+            print("Typical event from " + obj)
+            print(self.ids)
+            
+            # Id precisa ser algumacoisa _ alguma coisa
+            
+            texto = self.ids["id_text"]
+            print(texto.text)
+            
 class EditTaskScreen(Screen):
     pass
 
 class DeleteTaskScreen(Screen):
     pass
-
 
 presentation = Builder.load_file("ScreensPanlex.kv")
 
