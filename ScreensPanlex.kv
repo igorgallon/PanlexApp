@@ -1,20 +1,3 @@
-<LoginScreen>:
-    name: 'login'
-    f_username:
-    BoxLayout:
-        Button:
-            text: 'Sign up'
-            on_press: app.root.current = 'signup'
-            font_size: 30
-        Button:
-            text: 'Login'
-            font_size: 30
-            on_press: app.root.current = 'task'
-        Button:
-            text: 'Quit'
-            font_size: 30
-            on_press: App.get_running_app().stop()
-
 <SignupScreen>:
     name: 'signup'
     
@@ -31,20 +14,20 @@
     
     BoxLayout:
         Button:
+            text: 'Tasks'
+            on_press: app.root.current = 'seetasks'
+        Button:
             text: 'Add Task'
             on_press: app.root.current = 'newtask'
         Button:
             text: 'Edit Task'
-            on_press: app.root.current = 'edittask'
-        Button:
-            text: 'Remove Task'
-            on_press: app.root.current = 'deletetask'                
+            on_press: app.root.current = 'edittask'              
         Button:
             text: 'Settings'
             on_press: app.root.current = 'settings'
         Button:
-            text: 'Sign out'
-            on_press: app.root.current = 'login'
+            text: 'Quit'
+            on_press: App.get_running_app().stop()
 
 <SettingsScreen>:
     name: 'settings'
@@ -72,7 +55,7 @@
             text: 'Task Description'
         TextInput:
             id: id_text
-            text: 'teste'
+            text: ''
             
 <EditTaskScreen>:
     name: 'edittask'
@@ -85,8 +68,8 @@
             text: 'Cancel'
             on_press: app.root.current = 'task'
             
-<DeleteTaskScreen>:
-    name: 'deletetask'
+<SeeTasksScreen>:
+    name: 'seetasks'
     
     BoxLayout:
         Button:
@@ -94,4 +77,4 @@
             on_press: app.root.current = 'task'
         Button:
             text: 'Cancel'
-            on_press: app.root.current = 'task'  
+            on_press: app.root.current = 'task'
