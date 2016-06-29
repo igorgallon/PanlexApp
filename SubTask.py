@@ -9,11 +9,8 @@ class SubTask:
         SubTask.subtask_counter += 1      
         self.__description = description
         self.__done = done
-    
-    def get_info(self):
-        print (self.__idSubTask, self.__description, self.__done)
-    
-    # Metodos set
+        
+    # --- Metodos set ---
 
     def set_description(self, description):
         self.__description = description
@@ -21,7 +18,7 @@ class SubTask:
     def set_done(self, done):
         self.__done = done
   
-    # Metodos get
+    # --- Metodos get ---
     
     def get_idSubTask(self):
         return self.__idSubTask
@@ -31,3 +28,12 @@ class SubTask:
 
     def get_done(self):
         return self.__done
+    
+    # Atualiza informacoes de SubTask
+    def set_info(self, description, done):
+        SubTask.set_description(self, description)
+        SubTask.set_done(self, done)
+        
+    # Retorna informacoes de SubTask
+    def get_info(self):
+        print (self.__idSubTask, self.__description, self.__done)
