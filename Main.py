@@ -6,34 +6,48 @@ from Task import Task
 import time
 import datetime
 
-user = Controller('Igor Gallon', 5, 10)
+print('Inicia controller e lista todos os users no BD e tasks')
+ctr = Controller()
 
-print('Usuario:')
-user.get_info()
+#print('Cria usuario jarbas')
+#ctr.createUser('Jarbas', 5, 10)
+
+#print('Cria usuario joaozinho')
+#ctr.createUser('Joaozinho', 3, 8)
+
+print('Usuarios:')
+user = ctr.listUser()
+
+print('Deleta joaozionho')
+ctr.deleteUser('Joaozinho')
+
+print('mostra users')
+ctr.listUser()
 
 #deadline = datetime.datetime(year=2016, month=6, day=24, hour=18, minute=30)
-subtask = 'nada'
+#subtask = 'nada'
 deadline = datetime.datetime.now() + datetime.timedelta(10)
 
-print(user.createTask('hehehe', 5, deadline, 10))
-print(user.createTask('hahah', 9, deadline, 9))
-print(user.createTask('uhuhuh', 6, deadline, 5))
-print(user.createTask('hohoh', 3, deadline, 10))
+print ('Adicionando tasks...')
+print(ctr.createTask('hehehe', 5, deadline, 10))
+print(ctr.createTask('hahah', 9, deadline, 9))
+print(ctr.createTask('uhuhuh', 6, deadline, 5))
+print(ctr.createTask('hohoh', 3, deadline, 10))
 
-print ('Mostra BD')
-user.selectTask()
+print ('Mostra Tasks do BD...')
+ctr.listTask()
 
-print ('Deletar Task 2')
-print(user.deleteTask(2))
+#print ('Deletar Task 2')
+#print (ctr.deleteTask(2))
 
-print ('Mostra BD')
-user.selectTask()
+#print ('Mostra Tasks do BD depois de excluir Task 2')
+#ctr.listTask()
 
-print ('Editar Task 1')
-print(user.editTask(1,'Olar', 3, deadline, 10, 10))
+#print ('Editar Task 1')
+#print (ctr.editTask(1,'Olar', 3, deadline, 10, 10))
 
-print ('Mostra BD')
-print(user.selectTask())
+#print ('Mostra Tasks do BD depois de editar Task 1')
+#ctr.listTask()
 
 #t1 = Task('auhau', 15, deadline, 9, 'nenhuma')
 #t1.get_info()

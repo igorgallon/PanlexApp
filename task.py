@@ -4,26 +4,24 @@ import time
 import datetime
 import Functions 
 
+from DB import DB
+
 class Task:
-    
-    task_counter = 0
-    
-    def __init__ (self, description, workload, deadline, priority):  
-        self.__idTask = Task.task_counter
-        Task.task_counter += 1      
+        
+    def __init__ (self, description, workload, deadline, priority):
         self.__creationDate = datetime.datetime.now() # Define horario de criacao da Task
         self.__description = description
         self.__workload = workload
         self.__deadline = deadline
         self.__priority = priority
         self.__done = 0
-        self.__weight = (Functions.notCompleted(self)/Functions.remainingTime(self))*self.__priority
-       
-    # Metodos set
+        Task.set_weight(self)
+        
+    # --- Metodos set ---
     
     def set_idTask(self, idTask):
         self.__idTask = idTask
-
+            
     def set_creationDate(self, creationDate):
         self.__creationDate = creationDate
     
@@ -40,13 +38,13 @@ class Task:
         self.__priority = priority
         
     def set_done(self, done):
-        self.__done += done  
+        self.__done = done  
         
     def set_weight(self):
         # weight = (notCompleted / remainingTime) * priority
         self.__weight = (Functions.notCompleted(self)/Functions.remainingTime(self))*self.__priority
         
-    # Metodos get
+    # --- Metodos get ---
     
     def get_idTask(self):
         return self.__idTask
@@ -74,13 +72,13 @@ class Task:
     
     # Atualiza informacoes da Task
     def set_info(self, description, workload, deadline, priority, done):
-        self.__description = description
-        self.__workload = workload
-        self.__deadline = deadline
-        self.__priority = priority
-        self.__done += done
-        self.__weight = (Functions.notCompleted(self)/Functions.remainingTime(self))*self.__priority
-    
+        Task.set_description(self, description)
+        Task.set_workload(self, workload)
+        Task.set_deadline(self, deadline)
+        Task.set_priority(self, priority)
+        Task.set_done(self, done)
+        Task.set_weight(self)
+        
     # Retorna as informacoes da Task
     def get_info(self):
-        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__subtask, self.__done, self.__weight)    
+        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__done, self.__weight)    
