@@ -1,27 +1,33 @@
-<SignupScreen>:
-    name: 'signup'
+ScreenManagement:
+    InitialScreen:
+    SeeTasksScreen:
+    TaskInfoScreen:
+    EditTaskScreen:
+    NewTaskScreen:
+    SettingsScreen:
+    EditSettingsScreen:
+
+<InitialScreen>:
+    name: 'initial'
+    
+    canvas:
+        Rectangle:
+            source: 'Panlex_InitialScreen.png'
+            size: self.size
+            pos: self.pos
     
     BoxLayout:
-        Button:
-            text: 'OK'
-            on_press: app.root.current = 'login'
-        Button:
-            text: 'Back'
-            on_press: app.root.current = 'login'
-            
-<TaskScreen>:
-    name: 'task'
-    
-    BoxLayout:
+        orientation: 'vertical'
+        size_hint: (0.5, 0.5)
+        spacing: 10
+        pos_hint: {'center_x': 0.5, 'y': 0}
+        
         Button:
             text: 'Tasks'
             on_press: app.root.current = 'seetasks'
         Button:
             text: 'Add Task'
-            on_press: app.root.current = 'newtask'
-        Button:
-            text: 'Edit Task'
-            on_press: app.root.current = 'edittask'              
+            on_press: app.root.current = 'newtask'    
         Button:
             text: 'Settings'
             on_press: app.root.current = 'settings'
@@ -29,52 +35,234 @@
             text: 'Quit'
             on_press: App.get_running_app().stop()
 
-<SettingsScreen>:
-    name: 'settings'
+<SeeTasksScreen>:
+    name: 'seetasks'
     
     BoxLayout:
+        orientation: 'horizontal'
+        spacing: 20
+        size_hint: (0.5, 0.15)
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+        
         Button:
             text: 'OK'
-            on_press: app.root.current = 'task' 
+            on_press: app.root.current = 'initial'
         Button:
             text: 'Cancel'
-            on_press: app.root.current = 'task'
+            on_press: app.root.current = 'initial'
+    
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: 10
+        size_hint: (0.6, 0.4)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        
+        Button:
+            text: 'Task test 1'
+            on_press: app.root.current = 'taskinfo'
+        Button:
+            text: 'Task test 2'
+            on_press: app.root.current = 'taskinfo'
+        Button:
+            text: 'Task test 3'
+            on_press: app.root.current = 'taskinfo'
+
+<TaskInfoScreen>:
+    name: 'taskinfo'
+
+    BoxLayout:
+        orientation: 'horizontal'        
+        size_hint: (0.5, 0.15)
+        spacing: 20
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+        
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'seetasks'
+        Button:
+            text: 'Edit'
+            on_press: app.root.current = 'edittask'
+
+<EditTaskScreen>:
+    name: 'edittask'
+    
+    BoxLayout:
+        orientation: 'horizontal'
+        spacing: 20
+        size_hint: (0.5, 0.15)
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+    
+        Button:
+            text: 'OK'
+            on_press: app.root.current = 'taskinfo'
+        Button:
+            text: 'Cancel'
+            on_press: app.root.current = 'taskinfo'
+    
+    GridLayout:
+        cols: 2
+        spacing: 5, 10
+        size_hint: (0.8, 0.5)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
+        Label:
+            font_size: 28
+            text: 'Description'
+        TextInput:
+            id: id_description
+            text: ''
+        
+        Label:
+            font_size: 28
+            text: 'Workload (hours)'
+        TextInput:
+            id: id_workload
+            text: ''
+        
+        Label:
+            font_size: 28
+            text: 'Deadline'
+        TextInput:
+            id: id_deadline
+            text: ''
+
+        Label:
+            font_size: 28
+            text: 'Priority'
+        TextInput:
+            id: id_priority
+            text: ''
 
 <NewTaskScreen>:
     name: 'newtask'
-    
     BoxLayout:
+        orientation: 'horizontal'
+        spacing: 20
+        size_hint: (0.5, 0.15)
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+        
         Button:
             id: f_but
             text: 'OK'
             on_press: root.on_event('Teste passa string')
         Button:
             text: 'Cancel'
-            on_press: app.root.current = 'task'
+            on_press: app.root.current = 'initial'
+    GridLayout:
+        cols: 2
+        spacing: 5, 10
+        size_hint: (0.8, 0.5)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+
         Label:
-            text: 'Task Description'
+            font_size: 28
+            text: 'Description'
         TextInput:
-            id: id_text
+            id: id_description
             text: ''
-            
-<EditTaskScreen>:
-    name: 'edittask'
+        
+        Label:
+            font_size: 28
+            text: 'Workload (hours)'
+        TextInput:
+            id: id_workload
+            text: ''
+        
+        Label:
+            font_size: 28
+            text: 'Deadline'
+        TextInput:
+            id: id_deadline
+            text: ''
+
+        Label:
+            font_size: 28
+            text: 'Priority'
+        TextInput:
+            id: id_priority
+            text: ''
+
+<SettingsScreen>:
+    name: 'settings'
     
     BoxLayout:
+        orientation: 'horizontal'
+        spacing: 20
+        size_hint: (0.8, 0.15)
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+
         Button:
             text: 'OK'
-            on_press: app.root.current = 'task'
+            on_press: app.root.current = 'initial'
         Button:
-            text: 'Cancel'
-            on_press: app.root.current = 'task'
-            
-<SeeTasksScreen>:
-    name: 'seetasks'
+            text: 'Edit settings'
+            on_press: app.root.current = 'editsettings'
+    GridLayout:
+        cols: 2
+        spacing: 5, 10
+        size_hint: (0.8, 0.5)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        Label:
+            font_size: 28
+            text: 'Username'
+        Label:
+            id: id_username
+            font_size: 28
+            text: root.username
+        Label:
+            font_size: 28
+            text: 'Total workload daily'
+        Label:
+            id: id_workload
+            font_size: 28
+            text: root.workload
+        Label:
+            font_size: 28
+            text: 'Number of daily Tasks'
+        Label:
+            id: id_numtasks
+            font_size: 28
+            text: root.numtasks
+
+<EditSettingsScreen>:
+    name: 'editsettings'
     
     BoxLayout:
+        orientation: 'horizontal'
+        spacing: 20
+        size_hint: (0.5, 0.15)
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+
         Button:
             text: 'OK'
-            on_press: app.root.current = 'task'
+            on_press: app.root.current = 'settings'
         Button:
             text: 'Cancel'
-            on_press: app.root.current = 'task'
+            on_press: app.root.current = 'settings'
+    
+    GridLayout:
+        cols: 2
+        spacing: 5, 10
+        size_hint: (0.8, 0.5)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        Label:
+            font_size: 28
+            text: 'Username'
+        TextInput:
+            id: id_username
+            font_size: 28
+            text: 'username'
+        Label:
+            font_size: 28
+            text: 'Total workload daily'
+        TextInput:
+            id: id_workload
+            font_size: 28
+            text: 'work'
+        Label:
+            font_size: 28
+            text: 'Number of daily Tasks'
+        TextInput:
+            id: id_numtasks
+            font_size: 28
+            text: 'tasks'

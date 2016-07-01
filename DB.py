@@ -8,12 +8,20 @@ class DB:
 
     # Remove conexao com Bando de Dados
     def __del__(self):
-        self.__db.close()
+        self.__conexao.close()
+        
+    # Remove todas as tabelas do Banco de Dados
+    def dropTables(self):
+        cursor = self.__conexao.cursor()
+        cursor.execute('''DROP TABLE IF EXISTS Task''') # Exclui tabela anterior em BD
+        cursor.execute('''DROP TABLE IF EXISTS SubTask''')
+        cursor.execute('''DROP TABLE IF EXISTS User''')
+        cursor.close()
+        self.__conexao.commit()        
     
     # Cria tabela Task no Banco de Dados, tendo idTask como PK
     def createTask(self):
         cursor = self.__conexao.cursor()
-        #cursor.execute('''DROP TABLE IF EXISTS Task''') # Exclui tabela anterior em BD
         cursor.execute('''CREATE TABLE IF NOT EXISTS Task(idTask int PRIMARY KEY,
         creationDate text,description text,workload int,deadline text,priority int, done int, weight real)''')  
         cursor.close()
@@ -22,7 +30,6 @@ class DB:
     # Cria tabela SubTask no Banco de Dados, tendo idSubTask como FK de Task
     def createSubTask(self):
         cursor = self.__conexao.cursor()
-        #cursor.execute(''' DROP TABLE IF EXISTS SubTask ''') # Exclui tabela anterior em BD
         cursor.execute(''' CREATE TABLE IF NOT EXISTS SubTask(idTask int, idSubTask int, description text, done int,
                            FOREIGN KEY(idTask) REFERENCES Task(idTask)
                            PRIMARY KEY(idTask, idSubTask))''')
@@ -32,7 +39,6 @@ class DB:
     # Cria tabela que armazena configuracoes do Usuario
     def createUserSettings(self):
         cursor = self.__conexao.cursor()
-        #cursor.execute('''DROP TABLE IF EXISTS User''') # Exclui tabela anterior em BD
         cursor.execute('''CREATE TABLE IF NOT EXISTS User(username text, numTasksDaily int, workloadDaily int)''')  
         cursor.close()
         self.__conexao.commit()
@@ -64,7 +70,6 @@ class DB:
         tasks = []
         cursor = self.__conexao.cursor()
         for row in cursor.execute('SELECT * FROM Task ORDER BY idTask'):
-            #print(row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
             tasks.append(row)    
         cursor.close()
         self.__conexao.commit()
@@ -75,7 +80,6 @@ class DB:
         subTask = []
         cursor = self.__conexao.cursor()
         for row in cursor.execute('''SELECT * FROM SubTask WHERE idTask = ? ORDER by idSubTask''', [idTask]):
-            #print(row[0], row[1], row[2], row[3])
             subTask.append(row)
         cursor.close()
         self.__conexao.commit()
@@ -86,7 +90,6 @@ class DB:
         user = []
         cursor = self.__conexao.cursor()
         for row in cursor.execute('SELECT * FROM User'):
-            #print(row[0], row[1], row[2])
             user.append(row)
         cursor.close()
         self.__conexao.commit()
@@ -145,3 +148,12 @@ class DB:
         cursor.close()
         self.__conexao.commit()
         return idTask[0]
+    
+    # Retorna maior idSubTask da Tabela SubTask para uma determinada Task
+    def selectIdSubTask(self, idTask):
+        cursor = self.__conexao.cursor()
+        cursor.execute('''SELECT MAX(idSubTask) FROM SubTask WHERE idTask = ?''', [idTask])
+        idSubTask = cursor.fetchone()
+        cursor.close()
+        self.__conexao.commit()
+        return idSubTask[0]

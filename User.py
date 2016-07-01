@@ -5,20 +5,24 @@ class User:
         self.__username = username
         self.__numTasksDaily = numTasksDaily
         self.__workloadDaily = workloadDaily
-    
+        self.__idSubTask = 0
+        
     # --- Metodos set ---
     
     def set_username(self, username):
+        db = DB()
         self.__username = username
-        DB.insertUserSettings(self, self.__username, self.__numTasksDaily, self.__workloadDaily)
+        db.insertUserSettings(self.__username, self.__numTasksDaily, self.__workloadDaily)
         
     def set_numTasksDaily(self, numTaksDaily):
+        db = DB()
         self.__numTasksDaily = numTasksDaily
-        DB.insertUserSettings(self, self.__username, self.__numTasksDaily, self.__workloadDaily)
+        db.insertUserSettings(self.__username, self.__numTasksDaily, self.__workloadDaily)
     
     def set_workloadDaily(self, workloadDaily):
+        db = DB()
         self.__workloadDaily = workloadDaily
-        DB.insertUserSettings(self, self.__username, self.__numTasksDaily, self.__workloadDaily)
+        db.insertUserSettings(self.__username, self.__numTasksDaily, self.__workloadDaily)
         
     # --- Metodos get ---
     

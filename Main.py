@@ -1,41 +1,62 @@
 # Classe Main de Panlex App - 2016
 # Somente para testes com as estruturas de classes criadas
 
-from Controller import Controller
+from Controller import *
 from Task import Task
+from DB import DB
 import time
 import datetime
 
 print('Inicia controller e lista todos os users no BD e tasks')
-ctr = Controller()
+
+inicia()
 
 #print('Cria usuario jarbas')
 #ctr.createUser('Jarbas', 5, 10)
 
-#print('Cria usuario joaozinho')
-#ctr.createUser('Joaozinho', 3, 8)
+print('Cria usuario joaozinho')
+createUser('Joaozinho', 3, 8)
 
 print('Usuarios:')
-user = ctr.listUser()
+user = listUser()
+print('printa')
 
-print('Deleta joaozionho')
-ctr.deleteUser('Joaozinho')
+user[0].get_username
 
-print('mostra users')
-ctr.listUser()
+#print('Deleta joaozionho')
+#ctr.deleteUser('Joaozinho')
 
-#deadline = datetime.datetime(year=2016, month=6, day=24, hour=18, minute=30)
-#subtask = 'nada'
+#print('mostra users')
+#ctr.listUser()
+
 deadline = datetime.datetime.now() + datetime.timedelta(10)
 
 print ('Adicionando tasks...')
-print(ctr.createTask('hehehe', 5, deadline, 10))
-print(ctr.createTask('hahah', 9, deadline, 9))
-print(ctr.createTask('uhuhuh', 6, deadline, 5))
-print(ctr.createTask('hohoh', 3, deadline, 10))
+print(createTask('hehehe', 5, deadline, 10))
+print(createTask('hahah', 9, deadline, 9))
+print(createTask('uhuhuh', 6, deadline, 5))
+print(createTask('hohoh', 3, deadline, 10))
 
 print ('Mostra Tasks do BD...')
-ctr.listTask()
+# t é lista de tasks do BD
+t = listTask()
+
+print ('Criando subtask')
+t[0].createSubTask('Eu sou uma subtask da Task 0', 8)
+t[0].createSubTask('Eu sou uma subtask da Task 0', 3)
+
+t[1].createSubTask('Eu sou uma subtask da Task 1', 5)
+t[1].createSubTask('Eu sou uma subtask da Task 1', 6)
+
+t[2].createSubTask('Eu sou uma subtask da Task 2', 3)
+t[2].createSubTask('Eu sou uma subtask da Task 2', 4)
+t[2].createSubTask('Eu sou uma subtask da Task 2', 1)
+
+print('Mostra SubTask do BD da Task 1...')
+t[1].listSubTask()
+
+print('Mostra SubTask do BD da Task 2...')
+t[2].listSubTask()
 
 #print ('Deletar Task 2')
 #print (ctr.deleteTask(2))

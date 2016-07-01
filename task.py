@@ -5,6 +5,7 @@ import datetime
 import Functions 
 
 from DB import DB
+from SubTask import SubTask
 
 class Task:
         
@@ -17,10 +18,17 @@ class Task:
         self.__done = 0
         Task.set_weight(self)
         
+        subTask_counter = 0
+        
+        # Lista de SubTasks instanciadas para essa Task
+        self.__subTaskList = []
+                
     # --- Metodos set ---
     
     def set_idTask(self, idTask):
         self.__idTask = idTask
+        # Recupera SubTasks no BD para essa Task
+        Task.listSubTask(self)        
             
     def set_creationDate(self, creationDate):
         self.__creationDate = creationDate
@@ -81,4 +89,65 @@ class Task:
         
     # Retorna as informacoes da Task
     def get_info(self):
-        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__done, self.__weight)    
+        print (self.__idTask, self.__creationDate, self.__description, self.__workload, self.__deadline, self.__priority, self.__done, self.__weight)
+        
+    # --- Metodos para manipulacao de SubTasks ---
+        
+    def createSubTask(self, description, done):
+        db = DB()
+        # Procura max idSubTask no Banco
+        maxId = db.selectIdSubTask(self.__idTask)
+        
+        if(maxId is None):
+            idSubTask = 0
+        else:
+            idSubTask = maxId + 1
+            
+        # Instancia objeto subTask
+        subTask = SubTask(self.__idTask, description, done)
+
+        # Salva idTask na Task instanciada
+        subTask.set_idSubTask(idSubTask)            
+
+        self.__subTaskList.append(subTask)
+        
+        # Insere subTask no BD
+        db.insertSubTask(self.__idTask, idSubTask, description, done)
+        
+        return self.__subTaskList
+        
+    # Recupera subtasks de uma Task especifica e instancia em lista de objetos
+    def listSubTask(self):
+        db = DB()
+        
+        subTasks = db.selectSubTask(self.__idTask)
+        
+        for i in range(0, len(subTasks)):
+            s = SubTask(subTasks[i][0], subTasks[i][2], subTasks[i][3])
+            s.set_idSubTask(subTasks[i][1])
+            
+            s.get_info()
+
+            self.__subTaskList.append(s)
+            
+        return self.__subTaskList
+    
+    def editSubTask(self, idSubTask, description, done):
+        db = DB()
+        
+        self.__userList[idSubTask].set_info(username, numTasksDaily, workloadDaily)
+        
+        db.updateUserSettings(username, numTasksDaily, workloadDaily)
+        
+        return self.__subTaskList
+    
+    def deleteUser(self, idSubTask):
+        db = DB()
+        # Deletar SubTask no Banco de Dados...
+        db.deleteSubTask(self.__idTask, idSubTask)
+        
+        # Remove da lista de User
+        if len(self.__subTaskList) != 0:
+            self.__subTaskList.pop(idSubTask)
+           
+        return self.__subTaskList        
