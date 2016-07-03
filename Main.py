@@ -1,47 +1,76 @@
 # Classe Main de Panlex App - 2016
 # Somente para testes com as estruturas de classes criadas
 
-from Controller import *
 from Task import Task
 from DB import DB
 import time
 import datetime
+from Controller import Controller
 
 print('Inicia controller e lista todos os users no BD e tasks')
 
-inicia()
+ctr = Controller()
 
-#print('Cria usuario jarbas')
-#ctr.createUser('Jarbas', 5, 10)
-
-print('Cria usuario joaozinho')
-createUser('Joaozinho', 3, 8)
+print('Cria usuario jarbas')
+ctr.createUser('Jarbas', 5, 10)
 
 print('Usuarios:')
-user = listUser()
-print('printa')
-
-user[0].get_username
+user = ctr.listUser()
 
 #print('Deleta joaozionho')
 #ctr.deleteUser('Joaozinho')
 
-#print('mostra users')
-#ctr.listUser()
+print('mostra users')
+ctr.listUserInfo()
 
 deadline = datetime.datetime.now() + datetime.timedelta(10)
 
 print ('Adicionando tasks...')
-print(createTask('hehehe', 5, deadline, 10))
-print(createTask('hahah', 9, deadline, 9))
-print(createTask('uhuhuh', 6, deadline, 5))
-print(createTask('hohoh', 3, deadline, 10))
+print(ctr.createTask('hehehe', 5, deadline, 10))
+print(ctr.createTask('hahah', 9, deadline, 9))
+print(ctr.createTask('uhuhuh', 6, deadline, 5))
+print(ctr.createTask('hohoh', 3, deadline, 10))
 
 print ('Mostra Tasks do BD...')
-# t é lista de tasks do BD
-t = listTask()
+# t eh lista de tasks do BD
+t = ctr.listTask()
 
-print ('Criando subtask')
+print ('Deletar Task id=2')
+print (ctr.deleteTask(2))
+
+print ('Deletar Task id=1')
+print (ctr.deleteTask(1))
+
+print ('Mostra Tasks do BD depois de excluir Task id=2 e id=1')
+ctr.listTaskInfo()
+
+print ('Editar Task id=3')
+print (ctr.editTask(3,'eu sou a  tres', 3, deadline, 10, 10))
+
+print ('Mostra Tasks do BD depois de editar Task 1')
+ctr.listTaskInfo()
+
+print(ctr.createTask('hehehe', 5, deadline, 10))
+print(ctr.createTask('hahah', 9, deadline, 9))
+print(ctr.createTask('uhuhuh', 6, deadline, 5))
+print(ctr.createTask('hohoh', 3, deadline, 10))
+
+print('Lista tudo')
+ctr.listTaskInfo()
+
+print ('Deletar Task id=6')
+print (ctr.deleteTask(6))
+
+print('Lista tudo')
+ctr.listTaskInfo()
+
+print('Editar a task de id = 5')
+print (ctr.editTask(5,'eu sou a cinco', 3, deadline, 10, 10))
+
+print('Lista tudo')
+ctr.listTaskInfo()
+
+# print ('Criando subtask')
 t[0].createSubTask('Eu sou uma subtask da Task 0', 8)
 t[0].createSubTask('Eu sou uma subtask da Task 0', 3)
 
@@ -53,22 +82,13 @@ t[2].createSubTask('Eu sou uma subtask da Task 2', 4)
 t[2].createSubTask('Eu sou uma subtask da Task 2', 1)
 
 print('Mostra SubTask do BD da Task 1...')
-t[1].listSubTask()
+t[1].listSubTaskInfo()
 
 print('Mostra SubTask do BD da Task 2...')
-t[2].listSubTask()
+t[2].listSubTaskInfo()
 
-#print ('Deletar Task 2')
-#print (ctr.deleteTask(2))
-
-#print ('Mostra Tasks do BD depois de excluir Task 2')
-#ctr.listTask()
-
-#print ('Editar Task 1')
-#print (ctr.editTask(1,'Olar', 3, deadline, 10, 10))
-
-#print ('Mostra Tasks do BD depois de editar Task 1')
-#ctr.listTask()
+print('Mostra SubTask do BD da Task 0...')
+t[0].listSubTaskInfo()
 
 #t1 = Task('auhau', 15, deadline, 9, 'nenhuma')
 #t1.get_info()

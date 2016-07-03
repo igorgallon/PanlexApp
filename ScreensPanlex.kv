@@ -33,7 +33,7 @@ ScreenManagement:
             on_press: app.root.current = 'settings'
         Button:
             text: 'Quit'
-            on_press: App.get_running_app().stop()
+            on_press: app.get_running_app().stop()
 
 <SeeTasksScreen>:
     name: 'seetasks'
@@ -142,9 +142,10 @@ ScreenManagement:
         pos_hint: {'center_x': 0.5, 'y': 0.1}
         
         Button:
-            id: f_but
             text: 'OK'
-            on_press: root.on_event('Teste passa string')
+            on_press:
+                root.ok_button()
+                app.root.current = 'seetasks'
         Button:
             text: 'Cancel'
             on_press: app.root.current = 'initial'
@@ -159,28 +160,32 @@ ScreenManagement:
             text: 'Description'
         TextInput:
             id: id_description
-            text: ''
+            font_size: 28
+            text: root.description
         
         Label:
             font_size: 28
             text: 'Workload (hours)'
         TextInput:
             id: id_workload
-            text: ''
+            font_size: 28
+            text: root.workload
         
         Label:
             font_size: 28
             text: 'Deadline'
         TextInput:
             id: id_deadline
-            text: ''
+            font_size: 28
+            text: root.deadline
 
         Label:
             font_size: 28
             text: 'Priority'
         TextInput:
             id: id_priority
-            text: ''
+            font_size: 28
+            text: root.priority
 
 <SettingsScreen>:
     name: 'settings'
@@ -235,7 +240,9 @@ ScreenManagement:
 
         Button:
             text: 'OK'
-            on_press: app.root.current = 'settings'
+            on_press:
+                root.ok_button()
+                app.root.current = 'settings'
         Button:
             text: 'Cancel'
             on_press: app.root.current = 'settings'
@@ -251,18 +258,18 @@ ScreenManagement:
         TextInput:
             id: id_username
             font_size: 28
-            text: 'username'
+            text: root.username
         Label:
             font_size: 28
             text: 'Total workload daily'
         TextInput:
             id: id_workload
             font_size: 28
-            text: 'work'
+            text: root.workload
         Label:
             font_size: 28
             text: 'Number of daily Tasks'
         TextInput:
             id: id_numtasks
             font_size: 28
-            text: 'tasks'
+            text: root.numtasks
