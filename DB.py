@@ -17,8 +17,28 @@ class DB:
         cursor.execute('''DROP TABLE IF EXISTS SubTask''')
         cursor.execute('''DROP TABLE IF EXISTS User''')
         cursor.close()
-        self.__conexao.commit()        
-    
+        self.__conexao.commit()
+
+    # Remove todas as tabelas do Banco de Dados
+    def dropTask(self):
+        cursor = self.__conexao.cursor()
+        cursor.execute('''DROP TABLE IF EXISTS Task''') # Exclui tabela anterior em BD
+        cursor.close()
+        self.__conexao.commit()
+
+    # Remove todas as tabelas do Banco de Dados
+    def dropSubTask(self):
+        cursor = self.__conexao.cursor()
+        cursor.execute('''DROP TABLE IF EXISTS SubTask''')
+        cursor.close()
+        self.__conexao.commit()
+
+    def dropUser(self):
+        cursor = self.__conexao.cursor()
+        cursor.execute('''DROP TABLE IF EXISTS User''')
+        cursor.close()
+        self.__conexao.commit()
+
     # Cria tabela Task no Banco de Dados, tendo idTask como PK
     def createTask(self):
         cursor = self.__conexao.cursor()
@@ -37,9 +57,10 @@ class DB:
         self.__conexao.commit() 
 
     # Cria tabela que armazena configuracoes do Usuario
+
     def createUserSettings(self):
         cursor = self.__conexao.cursor()
-        cursor.execute('''CREATE TABLE IF NOT EXISTS User(username text, numTasksDaily int, workloadDaily int)''')  
+        cursor.execute('''CREATE TABLE IF NOT EXISTS User(idUser int, username text, numTasksDaily int, workloadDaily int)''')
         cursor.close()
         self.__conexao.commit()
     
@@ -61,11 +82,12 @@ class DB:
     # Insere informacoes do usuario
     def insertUserSettings(self, username, numTasksDaily, workloadDaily):
         cursor = self.__conexao.cursor()
-        cursor.execute('''INSERT INTO User VALUES(?,?,?)''', [username, numTasksDaily, workloadDaily])
+        cursor.execute('''INSERT INTO User VALUES(0,?,?,?)''', [username, numTasksDaily, workloadDaily])
         cursor.close()
         self.__conexao.commit()     
     
     # Lista todas as tuplas da tabela Task em ordem crescente de idTask
+
     def selectTask(self):
         tasks = []
         cursor = self.__conexao.cursor()
@@ -114,8 +136,8 @@ class DB:
     # Atualiza informacoes do usuario
     def updateUserSettings(self, username, numTasksDaily, workloadDaily):
         cursor = self.__conexao.cursor()
-        cursor.execute('''UPDATE User SET username = ?, numTaskDaily = ?, worloadDaily = ? WHERE username = ?''',
-                        [username, numTasksDaily, workloadDaily, username])
+        cursor.execute('''UPDATE User SET username = ?, numTasksDaily = ?, workloadDaily = ? WHERE idUser = 0''',
+                        [username, numTasksDaily, workloadDaily])
         cursor.close()
         self.__conexao.commit()
 
@@ -134,9 +156,9 @@ class DB:
         self.__conexao.commit()
         
     # Remove tupla da tabela User
-    def deleteUserSettings(self, username):
+    def deleteUserSettings(self):
         cursor = self.__conexao.cursor()
-        cursor.execute('''DELETE FROM User WHERE username LIKE ? ''', [username])
+        cursor.execute('''DELETE FROM User WHERE idUser = 0 ''')
         cursor.close()
         self.__conexao.commit()
         
