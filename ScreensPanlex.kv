@@ -20,7 +20,7 @@ ScreenManagement:
         orientation: 'vertical'
         size_hint: (0.5, 0.5)
         spacing: 10
-        pos_hint: {'center_x': 0.5, 'y': 0}
+        pos_hint: {'center_x': 0.5, 'y': 0.03}
         
         Button:
             text: 'Tasks'
@@ -66,6 +66,17 @@ ScreenManagement:
         Button:
             text: 'Task test 3'
             on_press: app.root.current = 'taskinfo'
+
+    Button:
+        pos_hint: {'center_x': 0.08, 'center_y': 0.6}
+        text: 'Previous'
+        size_hint: (0.1, 0.15)
+        on_press: app.root.current = 'seetasks'
+    Button:
+        pos_hint: {'center_x': 0.92, 'center_y': 0.6}
+        text: 'Next'
+        size_hint: (0.1, 0.15)
+        on_press: app.root.current = 'seetasks'
 
 <TaskInfoScreen>:
     name: 'taskinfo'
@@ -173,7 +184,7 @@ ScreenManagement:
         
         Label:
             font_size: 28
-            text: 'Deadline'
+            text: 'Deadline (YYYYMMDD)'
         TextInput:
             id: id_deadline
             font_size: 28
@@ -181,7 +192,7 @@ ScreenManagement:
 
         Label:
             font_size: 28
-            text: 'Priority'
+            text: 'Priority (1-10)'
         TextInput:
             id: id_priority
             font_size: 28

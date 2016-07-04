@@ -57,9 +57,12 @@ class NewTaskScreen(Screen):
         self.priority = self.ids['id_priority'].text
         # Nao adiciona Task se campos estiverem vazios
         if self.description and self.workload and self.deadline and self.priority:
-            strDeadline = datetime.strptime(self.deadline, '%Y-%m-%d')
+            self.deadline = self.deadline[:4] + '-' + self.deadline[4:]
+            self.deadline = self.deadline[:7] + '-' + self.deadline[7:]
+            self.deadline = self.deadline + ' '
+            self.deadline = self.deadline + '00:00:00.000001'
+            strDeadline = datetime.strptime(self.deadline, '%Y-%m-%d %H:%M:%S.%f')
             # Deadline so importa a data, hora nao precisa
-            strDeadline.replace(hour=0, minute=0, second=0)
             ctr.createTask(self.description, int(self.workload), strDeadline, int(self.priority))
             ctr.listTaskInfo()
         self.clear()
