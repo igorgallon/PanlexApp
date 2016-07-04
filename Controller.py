@@ -22,7 +22,7 @@ class Controller:
         db = DB()
         
         #db.dropUser()
-        db.dropTask()
+        #db.dropTask()
         db.dropSubTask()
 
         db.createTask() # Cria tabela para Tasks
@@ -90,6 +90,13 @@ class Controller:
 
         for x in self.taskList:
             x.get_info()
+
+    def listDesc(self):
+
+        lista = []
+        for x in self.taskList:
+            lista.append(x.get_description())
+        return lista
 
     def listUserInfo(self):
 

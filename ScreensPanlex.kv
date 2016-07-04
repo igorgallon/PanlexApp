@@ -35,6 +35,13 @@ ScreenManagement:
             text: 'Quit'
             on_press: app.get_running_app().stop()
 
+<TaskViewer>:
+    cols: 1
+    padding: 10
+    spacing: 10
+    height: self.minimum_height
+    size_hint: None, None
+
 <SeeTasksScreen>:
     name: 'seetasks'
     
@@ -50,33 +57,19 @@ ScreenManagement:
         Button:
             text: 'Cancel'
             on_press: app.root.current = 'initial'
-    
-    BoxLayout:
-        orientation: 'vertical'
-        spacing: 10
-        size_hint: (0.6, 0.4)
-        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
-        
         Button:
-            text: 'Task test 1'
-            on_press: app.root.current = 'taskinfo'
-        Button:
-            text: 'Task test 2'
-            on_press: app.root.current = 'taskinfo'
-        Button:
-            text: 'Task test 3'
-            on_press: app.root.current = 'taskinfo'
+            text: 'Refresh'
+            on_press: app.view_tasks(root)
 
-    Button:
-        pos_hint: {'center_x': 0.08, 'center_y': 0.6}
-        text: 'Previous'
-        size_hint: (0.1, 0.15)
-        on_press: app.root.current = 'seetasks'
-    Button:
-        pos_hint: {'center_x': 0.92, 'center_y': 0.6}
-        text: 'Next'
-        size_hint: (0.1, 0.15)
-        on_press: app.root.current = 'seetasks'
+    BoxLayout:
+
+        orientation: 'horizontal'
+        size_hint: (1, .8)
+        pos_hint: {'top':1, 'right':1}
+
+        ScrollView:
+            id: task_panel
+            size_hint:(.45, 1)
 
 <TaskInfoScreen>:
     name: 'taskinfo'

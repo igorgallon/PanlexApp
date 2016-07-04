@@ -1,10 +1,15 @@
 # Classe Panlex de Panlex App - 2016
 # Gerenciador da interface grafica
+import datetime
 from Controller import *
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.properties import ObjectProperty, StringProperty
+from kivy.uix.gridlayout import GridLayout
+from functools import partial
+from kivy.uix.button import Button
+from Task import Task
 
 ctr = ControllerSingleton()
 
@@ -13,8 +18,10 @@ class InitialScreen(Screen):
     pass
 
 class SeeTasksScreen(Screen):
-    # Lista todas as Tasks que o usuario possui
     pass
+    # Lista todas as Tasks que o usuario possui
+    # def __init__(self, **kwargs):
+    #   super(SeeTasksScreen, self).__init__(**kwargs)
 
 class TaskInfoScreen(Screen):
     # Exibe informacoes de uma Task
@@ -27,7 +34,9 @@ class EditTaskScreen(Screen):
     #    - Prioridade;
     #    - Descricao;
     #    - Excluir task.
+
     pass
+
 
 class NewTaskScreen(Screen):
     # Cria task
@@ -130,12 +139,30 @@ class EditSettingsScreen(Screen):
 class ScreenManagement(ScreenManager):
     pass
 
+class TaskViewer(GridLayout):
+    pass
+
 presentation = Builder.load_file("ScreensPanlex.kv")
 
 class PanlexApp(App):
         
     def build(self):
         return presentation
+
+    def view_tasks(self, root):
+        if root.ids["task_panel"].children:
+            root.ids["task_panel"].clear_widgets()
+        task_view = TaskViewer()
+        root.ids['task_panel'].add_widget(task_view)
+
+        buttonList = []
+
+        for x in ctr.taskList:
+            nameInfo = str(x.get_idTask()) + '-' + x.get_description()
+            buttonList.append(Button(text=nameInfo, size=(600, 60), size_hint=(None, None)))
+            task_view.add_widget(buttonList[len(buttonList) - 1])
+            # task_press = partial(self.task_press, listaDesc[len(buttonList) - 1], root)
+            # buttonList[len(buttonList) - 1].bind(on_press=task_press)
 
 if __name__ == '__main__':
     PanlexApp().run()
