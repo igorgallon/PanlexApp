@@ -12,7 +12,7 @@ from kivy.uix.button import Button
 from Task import Task
 
 ctr = ControllerSingleton()
-idTask = 1
+idTask = 0
 class InitialScreen(Screen):
     # Tela inicial do aplicativo
     pass
@@ -34,22 +34,21 @@ class TaskInfoScreen(Screen):
 
     def __init__(self, **kwargs):
         super(TaskInfoScreen, self).__init__(**kwargs)
-        print('passei ppor aqui', idTask)
         self.setLabel()
-        print(self.description)
 
     def setLabel(self):
         ID = int(idTask)
         for x in ctr.taskList:
             if x.get_idTask() == ID:
-                print('entrei na info', ID)
                 self.description = x.get_description()
                 self.workload = str(x.get_workload())
-                self.deadline = str(x.get_deadline())
+                self.deadline = str(x.get_deadline())[0:10]
                 self.priority = str(x.get_priority())
-                self.creation = str(x.get_creationDate())
+                self.creation = str(x.get_creationDate())[0:10]
                 self.done = str(x.get_done())
-                print(self.description)
+
+    def update(self):
+        self.manager.get_screen('edittask').update()
 
 class EditTaskScreen(Screen):
     # Edita as especificacoes de uma Task
@@ -67,14 +66,18 @@ class EditTaskScreen(Screen):
 
     def __init__(self, **kwargs):
         super(EditTaskScreen, self).__init__(**kwargs)
+        print('Inicia screen com id', idTask)
         self.update()
 
     def update(self):
+        print('Entrou no update')
         for x in ctr.taskList:
+            print('roda loop', x.get_idTask())
             if x.get_idTask() == idTask:
+                print('Atualiza campos id', idTask)
                 self.description = x.get_description()
                 self.workload = str(x.get_workload())
-                self.deadline = str(x.get_deadline())
+                self.deadline = str(x.get_deadline())[0:10]
                 self.priority = str(x.get_priority())
                 self.done = str(x.get_done())
 
@@ -86,10 +89,11 @@ class EditTaskScreen(Screen):
         self.done = self.ids['id_done'].text
 
         if self.description and self.workload and self.deadline and self.priority and self.done:
-            self.deadline = self.deadline + ' 00:00:00.000001'
-            strDeadline = datetime.strptime(self.deadline, '%Y-%m-%d %H:%M:%S.%f')
+            str = self.deadline + ' 00:00:00.000001'
+            strDeadline = datetime.strptime(str, '%Y-%m-%d %H:%M:%S.%f')
 
             ctr.editTask(idTask, self.description, int(self.workload), strDeadline, int(self.priority), int(self.done))
+            print('Agora edita task id', idTask)
             self.update()
 
     def del_button(self):
@@ -123,8 +127,8 @@ class NewTaskScreen(Screen):
         self.priority = self.ids['id_priority'].text
         # Nao adiciona Task se campos estiverem vazios
         if self.description and self.workload and self.deadline and self.priority:
-            self.deadline = self.deadline + ' 00:00:00.000001'
-            strDeadline = datetime.strptime(self.deadline, '%Y-%m-%d %H:%M:%S.%f')
+            str = self.deadline + ' 00:00:00.000001'
+            strDeadline = datetime.strptime(str, '%Y-%m-%d %H:%M:%S.%f')
             # Deadline so importa a data, hora nao precisa
             ctr.createTask(self.description, int(self.workload), strDeadline, int(self.priority))
             ctr.listTaskInfo()
@@ -214,24 +218,15 @@ class PanlexApp(App):
         return sm
 
     def change_screen(self, idtask, nothing):
+
         global idTask
         idTask = idtask
-        print('passo 1 id global', idTask)
-
-        # sm.remove_widget('taskinfo')
-
+        print('Estou na global: ', idTask)
         taskinfo = TaskInfoScreen()
         sm.add_widget(taskinfo)
-        print(sm.current)
         App.get_running_app().root.current = sm.next()
-        print(sm.current)
         x = TaskInfoScreen()
         sm.switch_to(x)
-        print(sm.current)
-
-        #sm.get_screen('taskinfo').setLabel()
-        #print(ScreenManagement.screens)
-        #print(ScreenManagement._get_screen_names(self))
 
     def view_tasks(self, root):
         if root.ids["task_panel"].children:
