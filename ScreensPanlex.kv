@@ -18,13 +18,83 @@
             on_press: app.root.current = 'seetasks'
         Button:
             text: 'Add Task'
-            on_press: app.root.current = 'newtask'    
+            on_press: app.root.current = 'newtask'
+        Button:
+            text: 'What should I do today?'
+            on_press:
+                root.updateWorks()
+                app.root.current = 'workday'
         Button:
             text: 'Settings'
             on_press: app.root.current = 'settings'
         Button:
             text: 'Quit'
             on_press: app.get_running_app().stop()
+
+<WorkDayScreen>:
+    name: 'workday'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: (0.2, 0.15)
+        spacing: 10
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+
+        Button:
+            text: 'Get work!'
+            on_press: app.root.current = "initial"
+
+    GridLayout:
+        cols: 2
+        spacing: 5, 10
+        size_hint: (0.8, 0.5)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        Label:
+            font_size: 28
+            text: root.task1
+            color: 0,0,0,0.9
+        Label:
+            id: id_description
+            font_size: 28
+            text: root.hours1
+            color: 0,0,0,0.9
+
+        Label:
+            font_size: 28
+            text: root.task2
+            color: 0,0,0,0.9
+        Label:
+            id: id_workload
+            font_size: 28
+            text: root.hours2
+            color: 0,0,0,0.9
+
+        Label:
+            font_size: 28
+            text: root.task3
+            color: 0,0,0,0.9
+        Label:
+            id: id_deadline
+            font_size: 28
+            text: root.hours3
+            color: 0,0,0,0.9
+
+        Label:
+            font_size: 28
+            text: root.task4
+            color: 0,0,0,0.9
+        Label:
+            id: id_deadline
+            font_size: 28
+            text: root.hours4
+            color: 0,0,0,0.9
+
 
 <TaskViewer>:
     cols: 1
@@ -351,7 +421,7 @@
             color: 0,0,0,0.9
         Label:
             font_size: 28
-            text: 'Number of daily Tasks'
+            text: 'Number of daily Tasks (1 to 4)'
             color: 0,0,0,0.9
         Label:
             id: id_numtasks

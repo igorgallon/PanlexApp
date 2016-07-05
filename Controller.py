@@ -2,7 +2,7 @@
 
 import time
 from datetime import datetime
-
+import math
 from Task import Task
 from DB import DB
 from User import User
@@ -36,7 +36,26 @@ class Controller:
         self.taskList = self.listTask()
 
     # --- Metodos para manipulacao de Tasks ---
-    
+
+    def hoursPerTask(self):
+        tasks = sorted(self.taskList, key=lambda y: y.get_weight(), reverse=True)
+        tasks = tasks[:self.userList[0].get_numTasksDaily()]
+
+        y = 0
+        list = []
+
+        if len(tasks) != 0:
+            for x in tasks:
+                y += x.get_weight()
+
+            hour = self.userList[0].get_workloadDaily() / y
+
+            for x in tasks:
+                tup = (str(float("{0:.1f}".format(hour * x.get_weight()))), x.get_description())
+                list.append(tup)
+
+        return list
+
     def createTask(self, description, workload, deadline, priority):
         db = DB()
         

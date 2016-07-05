@@ -1,24 +1,65 @@
 # Classe Panlex de Panlex App - 2016
 # Gerenciador da interface grafica
+
 import datetime
 from Controller import *
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import StringProperty
 from kivy.uix.gridlayout import GridLayout
 from functools import partial
 from kivy.uix.button import Button
-from Task import Task
 
+# Intancia Controller global
 ctr = ControllerSingleton()
+
+# Variavel global que define em qual Task o usuario selecionou
 idTask = 0
+
 class InitialScreen(Screen):
     # Tela inicial do aplicativo
-    pass
+    def updateWorks(self):
+        # Atualiza lista de tarefas para trabalhar no dia
+        self.manager.get_screen('workday').refresh()
 
 class SeeTasksScreen(Screen):
     pass
+
+class WorkDayScreen(Screen):
+    task1 = StringProperty()
+    task2 = StringProperty()
+    task3 = StringProperty()
+    task4 = StringProperty()
+    hours1 = StringProperty()
+    hours2 = StringProperty()
+    hours3 = StringProperty()
+    hours4 = StringProperty()
+
+    def __init__(self, **kwargs):
+        super(WorkDayScreen, self).__init__(**kwargs)
+        self.refresh()
+
+    # Atualiza informacoes na tela. Quais tasks o usuario devera realizar no dia
+    # com base na carga horaria diaria definia pelo usuario
+
+    def refresh(self):
+        list = ctr.hoursPerTask()
+
+        x = len(list)
+        if x < 4:
+            for z in range(0, 4-x):
+                tup = ('', '')
+                list.append(tup)
+
+        self.task1 = str(list[0][1])
+        self.task2 = str(list[1][1])
+        self.task3 = str(list[2][1])
+        self.task4 = str(list[3][1])
+        self.hours1 = str(list[0][0])
+        self.hours2 = str(list[1][0])
+        self.hours3 = str(list[2][0])
+        self.hours4 = str(list[3][0])
 
 class TaskInfoScreen(Screen):
     # Exibe informacoes de uma Task
@@ -198,6 +239,7 @@ sm.add_widget(InitialScreen(name='initial'))
 sm.add_widget(EditTaskScreen(name='edittask'))
 sm.add_widget(NewTaskScreen(name='newtask'))
 sm.add_widget(SettingsScreen(name='settings'))
+sm.add_widget(WorkDayScreen(name='workday'))
 sm.add_widget(EditSettingsScreen(name='editsettings'))
 sm.add_widget(SeeTasksScreen(name='seetasks'))
 sm.add_widget(TaskInfoScreen(name='taskinfo'))
@@ -228,7 +270,10 @@ class PanlexApp(App):
         tasks = sorted(ctr.taskList, key=lambda y: y.get_weight(), reverse=True)
 
         for x in tasks:
-            nameInfo = x.get_description()[:35]+'...' + ' Urgency: ' + str(int(x.get_weight()))
+            name = x.get_description()
+            if len(x.get_description()) > 35:
+                name = x.get_description()[:35] + '...'
+            nameInfo = name + ' Urgency: ' + str(int(x.get_weight()))
             buttonList.append(Button(id=str(x.get_idTask()), text=nameInfo, size=(600, 60), size_hint=(None, None)))
             task_view.add_widget(buttonList[len(buttonList) - 1])
             change_screen = partial(self.change_screen, x.get_idTask())
