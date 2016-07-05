@@ -35,6 +35,12 @@
 
 <SeeTasksScreen>:
     name: 'seetasks'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
     
     BoxLayout:
         orientation: 'horizontal'
@@ -56,7 +62,7 @@
 
         orientation: 'horizontal'
         size_hint: (1, .8)
-        pos_hint: {'top':1, 'right':1}
+        pos_hint: {'top':1, 'center_x':0.615}
 
         ScrollView:
             id: task_panel
@@ -64,6 +70,12 @@
 
 <TaskInfoScreen>:
     name: 'taskinfo'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
 
     BoxLayout:
         orientation: 'horizontal'        
@@ -86,53 +98,71 @@
         Label:
             font_size: 28
             text: 'Description'
+            color: 0,0,0,0.9
         Label:
             id: id_description
             font_size: 28
             text: root.description
+            color: 0,0,0,0.9
 
         Label:
             font_size: 28
             text: 'Workload (hours)'
+            color: 0,0,0,0.9
         Label:
             id: id_workload
             font_size: 28
             text: root.workload
+            color: 0,0,0,0.9
 
         Label:
             font_size: 28
             text: 'Deadline (YYYYMMDD)'
+            color: 0,0,0,0.9
         Label:
             id: id_deadline
             font_size: 28
             text: root.deadline
+            color: 0,0,0,0.9
 
         Label:
             font_size: 28
             text: 'Priority (1-10)'
+            color: 0,0,0,0.9
         Label:
             id: id_priority
             font_size: 28
             text: root.priority
+            color: 0,0,0,0.9
 
         Label:
             font_size: 28
             text: 'Creation date'
+            color: 0,0,0,0.9
         Label:
             id: id_creation
             font_size: 28
             text: root.creation
+            color: 0,0,0,0.9
 
         Label:
             font_size: 28
             text: 'Done'
+            color: 0,0,0,0.9
         Label:
             id: id_done
             font_size: 28
             text: root.done
+            color: 0,0,0,0.9
 
 <EditTaskScreen>:
     name: 'edittask'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
     
     BoxLayout:
         orientation: 'horizontal'
@@ -159,6 +189,7 @@
         Label:
             font_size: 28
             text: 'Description'
+            color: 0,0,0,0.9
         TextInput:
             id: id_description
             font_size: 28
@@ -167,6 +198,7 @@
         Label:
             font_size: 28
             text: 'Workload (hours)'
+            color: 0,0,0,0.9
         TextInput:
             id: id_workload
             font_size: 28
@@ -175,6 +207,7 @@
         Label:
             font_size: 28
             text: 'Deadline'
+            color: 0,0,0,0.9
         TextInput:
             id: id_deadline
             font_size: 28
@@ -183,6 +216,7 @@
         Label:
             font_size: 28
             text: 'Priority'
+            color: 0,0,0,0.9
         TextInput:
             id: id_priority
             font_size: 28
@@ -191,6 +225,7 @@
         Label:
             font_size: 28
             text: 'Done'
+            color: 0,0,0,0.9
         TextInput:
             id: id_done
             font_size: 28
@@ -204,6 +239,13 @@
 
 <NewTaskScreen>:
     name: 'newtask'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
+
     BoxLayout:
         orientation: 'horizontal'
         spacing: 20
@@ -218,6 +260,7 @@
         Button:
             text: 'Cancel'
             on_press: app.root.current = 'initial'
+
     GridLayout:
         cols: 2
         spacing: 5, 10
@@ -227,6 +270,7 @@
         Label:
             font_size: 28
             text: 'Description'
+            color: 0,0,0,0.9
         TextInput:
             id: id_description
             font_size: 28
@@ -235,6 +279,7 @@
         Label:
             font_size: 28
             text: 'Workload (hours)'
+            color: 0,0,0,0.9
         TextInput:
             id: id_workload
             font_size: 28
@@ -243,6 +288,7 @@
         Label:
             font_size: 28
             text: 'Deadline (YYYYMMDD)'
+            color: 0,0,0,0.9
         TextInput:
             id: id_deadline
             font_size: 28
@@ -251,6 +297,7 @@
         Label:
             font_size: 28
             text: 'Priority (1-10)'
+            color: 0,0,0,0.9
         TextInput:
             id: id_priority
             font_size: 28
@@ -258,6 +305,12 @@
 
 <SettingsScreen>:
     name: 'settings'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
     
     BoxLayout:
         orientation: 'horizontal'
@@ -279,27 +332,39 @@
         Label:
             font_size: 28
             text: 'Username'
+            color: 0,0,0,0.9
         Label:
             id: id_username
             font_size: 28
             text: root.username
+            color: 0,0,0,0.9
         Label:
             font_size: 28
             text: 'Total workload daily'
+            color: 0,0,0,0.9
         Label:
             id: id_workload
             font_size: 28
             text: root.workload
+            color: 0,0,0,0.9
         Label:
             font_size: 28
             text: 'Number of daily Tasks'
+            color: 0,0,0,0.9
         Label:
             id: id_numtasks
             font_size: 28
             text: root.numtasks
+            color: 0,0,0,0.9
 
 <EditSettingsScreen>:
     name: 'editsettings'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
     
     BoxLayout:
         orientation: 'horizontal'
@@ -324,6 +389,7 @@
         Label:
             font_size: 28
             text: 'Username'
+            color: 0,0,0,0.9
         TextInput:
             id: id_username
             font_size: 28
@@ -331,6 +397,7 @@
         Label:
             font_size: 28
             text: 'Total workload daily'
+            color: 0,0,0,0.9
         TextInput:
             id: id_workload
             font_size: 28
@@ -338,6 +405,7 @@
         Label:
             font_size: 28
             text: 'Number of daily Tasks'
+            color: 0,0,0,0.9
         TextInput:
             id: id_numtasks
             font_size: 28
