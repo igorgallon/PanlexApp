@@ -79,29 +79,10 @@ class Controller:
             t.set_creationDate(cd)
             t.set_done(int(tasks[i][6]))
             t.set_weight()
-    
-            t.get_info()
-            
+
             taskList.append(t)
         
         return taskList
-
-    def listTaskInfo(self):
-
-        for x in self.taskList:
-            x.get_info()
-
-    def listDesc(self):
-
-        lista = []
-        for x in self.taskList:
-            lista.append(x.get_description())
-        return lista
-
-    def listUserInfo(self):
-
-        for x in self.userList:
-            x.get_info()
 
     def deleteTask(self, idTask):
         db = DB()

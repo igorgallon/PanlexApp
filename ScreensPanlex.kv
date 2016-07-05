@@ -88,7 +88,9 @@
             on_press: app.root.current = 'seetasks'
         Button:
             text: 'Edit'
-            on_press: app.root.current = 'edittask'
+            on_press:
+                root.update()
+                app.root.current = 'edittask'
 
     GridLayout:
         cols: 2
@@ -102,7 +104,7 @@
         Label:
             id: id_description
             font_size: 28
-            text: root.description
+            text: root.descriptionShow
             color: 0,0,0,0.9
 
         Label:
@@ -117,7 +119,7 @@
 
         Label:
             font_size: 28
-            text: 'Deadline (YYYYMMDD)'
+            text: 'Deadline (YYYY-MM-DD)'
             color: 0,0,0,0.9
         Label:
             id: id_deadline
@@ -177,6 +179,12 @@
                 app.root.current = 'seetasks'
 
         Button:
+            text: 'Delete Task'
+            on_press:
+                root.del_button()
+                app.root.current = 'seetasks'
+
+        Button:
             text: 'Cancel'
             on_press: app.root.current = 'taskinfo'
     
@@ -231,12 +239,6 @@
             font_size: 28
             text: root.done
 
-        Button:
-            text: 'Delete Task'
-            on_press:
-                root.del_button()
-                app.root.current = 'seetasks'
-
 <NewTaskScreen>:
     name: 'newtask'
 
@@ -287,7 +289,7 @@
         
         Label:
             font_size: 28
-            text: 'Deadline (YYYYMMDD)'
+            text: 'Deadline (YYYY-MM-DD)'
             color: 0,0,0,0.9
         TextInput:
             id: id_deadline

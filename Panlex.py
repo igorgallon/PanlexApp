@@ -19,13 +19,11 @@ class InitialScreen(Screen):
 
 class SeeTasksScreen(Screen):
     pass
-    # Lista todas as Tasks que o usuario possui
-    # def __init__(self, **kwargs):
-    #   super(SeeTasksScreen, self).__init__(**kwargs)
 
 class TaskInfoScreen(Screen):
     # Exibe informacoes de uma Task
     description = StringProperty()
+    descriptionShow = StringProperty()
     workload = StringProperty()
     deadline = StringProperty()
     priority = StringProperty()
@@ -41,10 +39,11 @@ class TaskInfoScreen(Screen):
         for x in ctr.taskList:
             if x.get_idTask() == ID:
                 self.description = x.get_description()
+                self.descriptionShow = self.description[:20]+'...'
                 self.workload = str(x.get_workload())
-                self.deadline = str(x.get_deadline())[0:10]
+                self.deadline = str(x.get_deadline())[:10]
                 self.priority = str(x.get_priority())
-                self.creation = str(x.get_creationDate())[0:10]
+                self.creation = str(x.get_creationDate())[:10]
                 self.done = str(x.get_done())
 
     def update(self):
@@ -66,15 +65,11 @@ class EditTaskScreen(Screen):
 
     def __init__(self, **kwargs):
         super(EditTaskScreen, self).__init__(**kwargs)
-        print('Inicia screen com id', idTask)
         self.update()
 
     def update(self):
-        print('Entrou no update')
         for x in ctr.taskList:
-            print('roda loop', x.get_idTask())
             if x.get_idTask() == idTask:
-                print('Atualiza campos id', idTask)
                 self.description = x.get_description()
                 self.workload = str(x.get_workload())
                 self.deadline = str(x.get_deadline())[0:10]
@@ -91,9 +86,7 @@ class EditTaskScreen(Screen):
         if self.description and self.workload and self.deadline and self.priority and self.done:
             str = self.deadline + ' 00:00:00.000001'
             strDeadline = datetime.strptime(str, '%Y-%m-%d %H:%M:%S.%f')
-
             ctr.editTask(idTask, self.description, int(self.workload), strDeadline, int(self.priority), int(self.done))
-            print('Agora edita task id', idTask)
             self.update()
 
     def del_button(self):
@@ -131,7 +124,6 @@ class NewTaskScreen(Screen):
             strDeadline = datetime.strptime(str, '%Y-%m-%d %H:%M:%S.%f')
             # Deadline so importa a data, hora nao precisa
             ctr.createTask(self.description, int(self.workload), strDeadline, int(self.priority))
-            ctr.listTaskInfo()
         self.clear()
 
 class SettingsScreen(Screen):
@@ -152,7 +144,6 @@ class SettingsScreen(Screen):
             self.username = ctr.userList[0].get_username()
             self.workload = str(ctr.userList[0].get_workloadDaily())
             self.numtasks = str(ctr.userList[0].get_numTasksDaily())
-            print('Inicia settings', self.username, self.workload, self.numtasks)
         else:
             self.username = 'None'
             self.workload = 'None'
@@ -188,7 +179,6 @@ class EditSettingsScreen(Screen):
 
         if len(ctr.userList) != 0:
             ctr.editUser(self.username, int(self.numtasks), int(self.workload))
-            print(ctr.userList[0].get_username(), ctr.userList[0].get_workloadDaily(), ctr.userList[0].get_numTasksDaily())
         else:
             ctr.createUser(self.username, int(self.numtasks), int(self.workload))
 
@@ -221,7 +211,6 @@ class PanlexApp(App):
 
         global idTask
         idTask = idtask
-        print('Estou na global: ', idTask)
         taskinfo = TaskInfoScreen()
         sm.add_widget(taskinfo)
         App.get_running_app().root.current = sm.next()
@@ -239,12 +228,11 @@ class PanlexApp(App):
         tasks = sorted(ctr.taskList, key=lambda y: y.get_weight(), reverse=True)
 
         for x in tasks:
-            nameInfo = str(x.get_idTask()) + ' - ' + x.get_description() + ' ' + str(int(x.get_weight()))
+            nameInfo = x.get_description()[:35]+'...' + ' Urgency: ' + str(int(x.get_weight()))
             buttonList.append(Button(id=str(x.get_idTask()), text=nameInfo, size=(600, 60), size_hint=(None, None)))
             task_view.add_widget(buttonList[len(buttonList) - 1])
             change_screen = partial(self.change_screen, x.get_idTask())
             buttonList[len(buttonList) - 1].bind(on_press=change_screen)
-
 
 if __name__ == '__main__':
     PanlexApp().run()
