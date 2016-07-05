@@ -87,6 +87,59 @@ ScreenManagement:
             text: 'Edit'
             on_press: app.root.current = 'edittask'
 
+    GridLayout:
+        cols: 2
+        spacing: 5, 10
+        size_hint: (0.8, 0.5)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        Label:
+            font_size: 28
+            text: 'Description'
+        Label:
+            id: id_description
+            font_size: 28
+            text: root.description
+
+        Label:
+            font_size: 28
+            text: 'Workload (hours)'
+        Label:
+            id: id_workload
+            font_size: 28
+            text: root.workload
+
+        Label:
+            font_size: 28
+            text: 'Deadline (YYYYMMDD)'
+        Label:
+            id: id_deadline
+            font_size: 28
+            text: root.deadline
+
+        Label:
+            font_size: 28
+            text: 'Priority (1-10)'
+        Label:
+            id: id_priority
+            font_size: 28
+            text: root.priority
+
+        Label:
+            font_size: 28
+            text: 'Creation date'
+        Label:
+            id: id_creation
+            font_size: 28
+            text: root.creation
+
+        Label:
+            font_size: 28
+            text: 'Done'
+        Label:
+            id: id_done
+            font_size: 28
+            text: root.done
+
 <EditTaskScreen>:
     name: 'edittask'
     

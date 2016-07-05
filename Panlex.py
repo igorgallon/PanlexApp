@@ -12,7 +12,7 @@ from kivy.uix.button import Button
 from Task import Task
 
 ctr = ControllerSingleton()
-
+idTask = 1
 class InitialScreen(Screen):
     # Tela inicial do aplicativo
     pass
@@ -25,7 +25,31 @@ class SeeTasksScreen(Screen):
 
 class TaskInfoScreen(Screen):
     # Exibe informacoes de uma Task
-    pass
+    description = StringProperty()
+    workload = StringProperty()
+    deadline = StringProperty()
+    priority = StringProperty()
+    creation = StringProperty()
+    done = StringProperty()
+
+    def __init__(self, **kwargs):
+        super(TaskInfoScreen, self).__init__(**kwargs)
+        print('passei ppor aqui', idTask)
+        self.setLabel()
+        print(self.description)
+
+    def setLabel(self):
+        ID = int(idTask)
+        for x in ctr.taskList:
+            if x.get_idTask() == ID:
+                print('entrei na info', ID)
+                self.description = x.get_description()
+                self.workload = str(x.get_workload())
+                self.deadline = str(x.get_deadline())
+                self.priority = str(x.get_priority())
+                self.creation = str(x.get_creationDate())
+                self.done = str(x.get_done())
+                print(self.description)
 
 class EditTaskScreen(Screen):
     # Edita as especificacoes de uma Task
@@ -145,9 +169,18 @@ class TaskViewer(GridLayout):
 presentation = Builder.load_file("ScreensPanlex.kv")
 
 class PanlexApp(App):
-        
+
     def build(self):
         return presentation
+
+    def change_screen(self, idtask, nothing):
+        global idTask
+        idTask = idtask
+        print('passo 1 id global', idTask)
+        #App.get_screen('taskinfo').setLabel()
+        App.get_running_app().root.current = 'taskinfo'
+        print(ScreenManagement.screens)
+        # print(ScreenManagement._get_screen_names(self))
 
     def view_tasks(self, root):
         if root.ids["task_panel"].children:
@@ -157,12 +190,15 @@ class PanlexApp(App):
 
         buttonList = []
 
-        for x in ctr.taskList:
-            nameInfo = str(x.get_idTask()) + '-' + x.get_description()
-            buttonList.append(Button(text=nameInfo, size=(600, 60), size_hint=(None, None)))
+        tasks = sorted(ctr.taskList, key=lambda y: y.get_weight(), reverse=True)
+
+        for x in tasks:
+            nameInfo = str(x.get_idTask()) + ' - ' + x.get_description() + ' ' + str(int(x.get_weight()))
+            buttonList.append(Button(id=str(x.get_idTask()), text=nameInfo, size=(600, 60), size_hint=(None, None)))
             task_view.add_widget(buttonList[len(buttonList) - 1])
-            # task_press = partial(self.task_press, listaDesc[len(buttonList) - 1], root)
-            # buttonList[len(buttonList) - 1].bind(on_press=task_press)
+            change_screen = partial(self.change_screen, x.get_idTask())
+            buttonList[len(buttonList) - 1].bind(on_press=change_screen)
+
 
 if __name__ == '__main__':
     PanlexApp().run()
