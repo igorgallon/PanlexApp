@@ -59,8 +59,41 @@ class EditTaskScreen(Screen):
     #    - Descricao;
     #    - Excluir task.
 
-    pass
+    description = StringProperty()
+    workload = StringProperty()
+    deadline = StringProperty()
+    priority = StringProperty()
+    done = StringProperty()
 
+    def __init__(self, **kwargs):
+        super(EditTaskScreen, self).__init__(**kwargs)
+        self.update()
+
+    def update(self):
+        for x in ctr.taskList:
+            if x.get_idTask() == idTask:
+                self.description = x.get_description()
+                self.workload = str(x.get_workload())
+                self.deadline = str(x.get_deadline())
+                self.priority = str(x.get_priority())
+                self.done = str(x.get_done())
+
+    def ok_button(self):
+        self.description = self.ids['id_description'].text
+        self.workload = self.ids['id_workload'].text
+        self.deadline = self.ids['id_deadline'].text
+        self.priority = self.ids['id_priority'].text
+        self.done = self.ids['id_done'].text
+
+        if self.description and self.workload and self.deadline and self.priority and self.done:
+            self.deadline = self.deadline + ' 00:00:00.000001'
+            strDeadline = datetime.strptime(self.deadline, '%Y-%m-%d %H:%M:%S.%f')
+
+            ctr.editTask(idTask, self.description, int(self.workload), strDeadline, int(self.priority), int(self.done))
+            self.update()
+
+    def del_button(self):
+        ctr.deleteTask(idTask)
 
 class NewTaskScreen(Screen):
     # Cria task
@@ -90,10 +123,7 @@ class NewTaskScreen(Screen):
         self.priority = self.ids['id_priority'].text
         # Nao adiciona Task se campos estiverem vazios
         if self.description and self.workload and self.deadline and self.priority:
-            self.deadline = self.deadline[:4] + '-' + self.deadline[4:]
-            self.deadline = self.deadline[:7] + '-' + self.deadline[7:]
-            self.deadline = self.deadline + ' '
-            self.deadline = self.deadline + '00:00:00.000001'
+            self.deadline = self.deadline + ' 00:00:00.000001'
             strDeadline = datetime.strptime(self.deadline, '%Y-%m-%d %H:%M:%S.%f')
             # Deadline so importa a data, hora nao precisa
             ctr.createTask(self.description, int(self.workload), strDeadline, int(self.priority))
@@ -166,21 +196,42 @@ class ScreenManagement(ScreenManager):
 class TaskViewer(GridLayout):
     pass
 
-presentation = Builder.load_file("ScreensPanlex.kv")
+Builder.load_file("ScreensPanlex.kv")
+
+sm = ScreenManagement()
+
+sm.add_widget(InitialScreen(name='initial'))
+sm.add_widget(EditTaskScreen(name='edittask'))
+sm.add_widget(NewTaskScreen(name='newtask'))
+sm.add_widget(SettingsScreen(name='settings'))
+sm.add_widget(EditSettingsScreen(name='editsettings'))
+sm.add_widget(SeeTasksScreen(name='seetasks'))
+sm.add_widget(TaskInfoScreen(name='taskinfo'))
 
 class PanlexApp(App):
 
     def build(self):
-        return presentation
+        return sm
 
     def change_screen(self, idtask, nothing):
         global idTask
         idTask = idtask
         print('passo 1 id global', idTask)
-        #App.get_screen('taskinfo').setLabel()
-        App.get_running_app().root.current = 'taskinfo'
-        print(ScreenManagement.screens)
-        # print(ScreenManagement._get_screen_names(self))
+
+        # sm.remove_widget('taskinfo')
+
+        taskinfo = TaskInfoScreen()
+        sm.add_widget(taskinfo)
+        print(sm.current)
+        App.get_running_app().root.current = sm.next()
+        print(sm.current)
+        x = TaskInfoScreen()
+        sm.switch_to(x)
+        print(sm.current)
+
+        #sm.get_screen('taskinfo').setLabel()
+        #print(ScreenManagement.screens)
+        #print(ScreenManagement._get_screen_names(self))
 
     def view_tasks(self, root):
         if root.ids["task_panel"].children:

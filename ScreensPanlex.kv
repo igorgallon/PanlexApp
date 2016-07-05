@@ -1,12 +1,3 @@
-ScreenManagement:
-    InitialScreen:
-    SeeTasksScreen:
-    TaskInfoScreen:
-    EditTaskScreen:
-    NewTaskScreen:
-    SettingsScreen:
-    EditSettingsScreen:
-
 <InitialScreen>:
     name: 'initial'
     
@@ -151,7 +142,10 @@ ScreenManagement:
     
         Button:
             text: 'OK'
-            on_press: app.root.current = 'taskinfo'
+            on_press:
+                root.ok_button()
+                app.root.current = 'seetasks'
+
         Button:
             text: 'Cancel'
             on_press: app.root.current = 'taskinfo'
@@ -167,28 +161,46 @@ ScreenManagement:
             text: 'Description'
         TextInput:
             id: id_description
-            text: ''
+            font_size: 28
+            text: root.description
         
         Label:
             font_size: 28
             text: 'Workload (hours)'
         TextInput:
             id: id_workload
-            text: ''
+            font_size: 28
+            text: root.workload
         
         Label:
             font_size: 28
             text: 'Deadline'
         TextInput:
             id: id_deadline
-            text: ''
+            font_size: 28
+            text: root.deadline
 
         Label:
             font_size: 28
             text: 'Priority'
         TextInput:
             id: id_priority
-            text: ''
+            font_size: 28
+            text: root.priority
+
+        Label:
+            font_size: 28
+            text: 'Done'
+        TextInput:
+            id: id_done
+            font_size: 28
+            text: root.done
+
+        Button:
+            text: 'Delete Task'
+            on_press:
+                root.del_button()
+                app.root.current = 'seetasks'
 
 <NewTaskScreen>:
     name: 'newtask'
