@@ -31,6 +31,45 @@
             text: 'Quit'
             on_press: app.get_running_app().stop()
 
+    Button:
+        text:'?'
+        on_press: app.root.current = 'about'
+        pos_hint: {'center_x': 0.95, 'y': 0.05}
+        size_hint: (0.05, 0.05)
+
+<AboutScreen>
+    name: 'about'
+
+    canvas:
+        Rectangle:
+            source: 'Pattern-BG.jpg'
+            size: self.size
+            pos: self.pos
+
+    Button:
+        text:'Ok'
+        on_press: app.root.current = 'initial'
+        pos_hint: {'center_x': 0.5, 'y': 0.1}
+        size_hint: (0.2, 0.15)
+
+    Label:
+        font_size: 18
+        pos_hint: {'center_x': 0.5, 'center_y': 0.70}
+        text: 'The App intention is add your tasks, daily workload and number of tasks to work per day.'
+        color: 0,0,0,0.9
+
+    Label:
+        font_size: 18
+        pos_hint: {'center_x': 0.5, 'center_y': 0.65}
+        text: 'Then the app suggests which tasks, and how many hours, you should work today!'
+        color: 0,0,0,0.9
+
+    Label:
+        font_size: 18
+        pos_hint: {'center_x': 0.5, 'center_y': 0.60}
+        text: 'Give it a try!'
+        color: 0,0,0,0.9
+
 <WorkDayScreen>:
     name: 'workday'
 

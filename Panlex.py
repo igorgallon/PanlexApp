@@ -26,6 +26,9 @@ class InitialScreen(Screen):
 class SeeTasksScreen(Screen):
     pass
 
+class AboutScreen(Screen):
+    pass
+
 class WorkDayScreen(Screen):
     task1 = StringProperty()
     task2 = StringProperty()
@@ -240,6 +243,7 @@ sm.add_widget(EditTaskScreen(name='edittask'))
 sm.add_widget(NewTaskScreen(name='newtask'))
 sm.add_widget(SettingsScreen(name='settings'))
 sm.add_widget(WorkDayScreen(name='workday'))
+sm.add_widget(AboutScreen(name='about'))
 sm.add_widget(EditSettingsScreen(name='editsettings'))
 sm.add_widget(SeeTasksScreen(name='seetasks'))
 sm.add_widget(TaskInfoScreen(name='taskinfo'))
