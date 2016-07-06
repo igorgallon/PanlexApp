@@ -39,6 +39,7 @@ class WorkDayScreen(Screen):
     hours3 = StringProperty()
     hours4 = StringProperty()
 
+    # Executado sempre quando a Screen eh iniciada
     def __init__(self, **kwargs):
         super(WorkDayScreen, self).__init__(**kwargs)
         self.refresh()
@@ -74,6 +75,7 @@ class TaskInfoScreen(Screen):
     creation = StringProperty()
     done = StringProperty()
 
+    # Executado sempre quando a Screen eh iniciada
     def __init__(self, **kwargs):
         super(TaskInfoScreen, self).__init__(**kwargs)
         self.setLabel()
@@ -83,10 +85,12 @@ class TaskInfoScreen(Screen):
         for x in ctr.taskList:
             if x.get_idTask() == ID:
                 self.description = x.get_description()
-                self.descriptionShow = self.description[:20]+'...'
+                self.descriptionShow = self.description[:20]+'...' # A string eh truncada, para poder aparecer na tela
                 self.workload = str(x.get_workload())
+                # O deadline padrao possui informacoes de horas, minutos, segundo e microsegundos, por isso truncamos para mostrar somente a data
                 self.deadline = str(x.get_deadline())[:10]
                 self.priority = str(x.get_priority())
+                # O mesmo caso que o deadline
                 self.creation = str(x.get_creationDate())[:10]
                 self.done = str(x.get_done())
 
@@ -107,6 +111,7 @@ class EditTaskScreen(Screen):
     priority = StringProperty()
     done = StringProperty()
 
+    # Executado sempre quando a Screen eh iniciada
     def __init__(self, **kwargs):
         super(EditTaskScreen, self).__init__(**kwargs)
         self.update()
@@ -121,6 +126,7 @@ class EditTaskScreen(Screen):
                 self.done = str(x.get_done())
 
     def ok_button(self):
+        # Coletando informacoes inseridas pelo usuario
         self.description = self.ids['id_description'].text
         self.workload = self.ids['id_workload'].text
         self.deadline = self.ids['id_deadline'].text
@@ -128,6 +134,8 @@ class EditTaskScreen(Screen):
         self.done = self.ids['id_done'].text
 
         if self.description and self.workload and self.deadline and self.priority and self.done:
+            # Eh esperado que o usuario preencha o campo dedline no padrao YYYY-MM-DD,
+            # com isso adicionamos os valores para hora, minuto, segundo e microsegundo para poder usar a variavel datetime
             str = self.deadline + ' 00:00:00.000001'
             strDeadline = datetime.strptime(str, '%Y-%m-%d %H:%M:%S.%f')
             ctr.editTask(idTask, self.description, int(self.workload), strDeadline, int(self.priority), int(self.done))
@@ -147,6 +155,7 @@ class NewTaskScreen(Screen):
     deadline = StringProperty()
     priority = StringProperty()
 
+    # Executado sempre quando a Screen eh iniciada
     def __init__(self, **kwargs):
         super(NewTaskScreen, self).__init__(**kwargs)
         self.clear()
@@ -158,6 +167,7 @@ class NewTaskScreen(Screen):
         self.priority = ''
 
     def ok_button(self):
+        # Coletando informacoes inseridas pelo usuario
         self.description = self.ids['id_description'].text
         self.workload = self.ids['id_workload'].text
         self.deadline = self.ids['id_deadline'].text
@@ -179,6 +189,7 @@ class SettingsScreen(Screen):
     workload = StringProperty()
     numtasks = StringProperty()
 
+    # Executado sempre quando a Screen eh iniciada
     def __init__(self, **kwargs):
         super(SettingsScreen, self).__init__(**kwargs)
         self.update()
@@ -201,7 +212,8 @@ class EditSettingsScreen(Screen):
     username = StringProperty()
     workload = StringProperty()
     numtasks = StringProperty()
-    
+
+    # Executado sempre quando a Screen eh iniciada
     def __init__(self, **kwargs):
         super(EditSettingsScreen, self).__init__(**kwargs)
         self.update()
@@ -238,6 +250,7 @@ Builder.load_file("ScreensPanlex.kv")
 
 sm = ScreenManagement()
 
+# Associacao de screens ao ScreenManagement
 sm.add_widget(InitialScreen(name='initial'))
 sm.add_widget(EditTaskScreen(name='edittask'))
 sm.add_widget(NewTaskScreen(name='newtask'))
@@ -263,6 +276,7 @@ class PanlexApp(App):
         x = TaskInfoScreen()
         sm.switch_to(x)
 
+    # Metodo para listar as tasks do usuário
     def view_tasks(self, root):
         if root.ids["task_panel"].children:
             root.ids["task_panel"].clear_widgets()
@@ -273,6 +287,7 @@ class PanlexApp(App):
 
         tasks = sorted(ctr.taskList, key=lambda y: y.get_weight(), reverse=True)
 
+        # Eh criado uma lista de botões e associasse uma tela pra cada um deles
         for x in tasks:
             name = x.get_description()
             if len(x.get_description()) > 35:

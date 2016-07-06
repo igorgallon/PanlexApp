@@ -21,10 +21,6 @@ class Controller:
     
         db = DB()
         
-        #db.dropUser()
-        #db.dropTask()
-        db.dropSubTask()
-
         db.createTask() # Cria tabela para Tasks
         db.createSubTask() # Cria tabela para SubTasks
         db.createUserSettings() # Cria tabela para armazenar informacoes do usuario
